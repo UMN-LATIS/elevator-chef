@@ -1,0 +1,37 @@
+Bluepill.application("elevatorWeb") do |app|
+  app.process("prepareDrawers") do |process|
+    process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive prepareDrawers"
+    process.group = "dcl"
+    process.daemonize = true
+    process.pid_file = "/tmp/prepareDrawers"
+    process.stdout = process.stderr = "/tmp/prepareDrawers.log"
+    process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+  end
+
+  app.process("restoreFiles") do |process|
+    process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive restoreFiles"
+    process.group = "dcl"
+    process.daemonize = true
+    process.pid_file = "/tmp/restoreFiles"
+    process.stdout = process.stderr = "/tmp/restoreFiles.log"
+    process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+  end
+
+  app.process("reindex") do |process|
+    process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive updateIndexes"
+    process.group = "dcl"
+    process.daemonize = true
+    process.pid_file = "/tmp/updateIndexes"
+    process.stdout = process.stderr = "/tmp/updateIndexes.log"
+    process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+  end
+
+  app.process("migrate") do |process|
+    process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive migrateCollections"
+    process.group = "dcl"
+    process.daemonize = true
+    process.pid_file = "/tmp/migrateCollections"
+    process.stdout = process.stderr = "/tmp/migrateCollections.log"
+    process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+  end
+end

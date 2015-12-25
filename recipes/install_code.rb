@@ -1,0 +1,91 @@
+include_recipe "#{cookbook_name}::git_setup"
+
+# install PHP
+include_recipe "php"
+package "php5-pgsql"
+package "php5-curl"
+package "php5-ldap"
+package "php5-apcu"
+package "php5-mongo"
+package "php5-imagick"
+
+# Before running composer, let's cache some well-known remote ssh keys.  Saves
+# against some ways it'll break (wanting to be interactive).
+ssh_known_hosts_entry 'github.com'
+ssh_known_hosts_entry 'github.umn.edu'
+
+# set up the web application, which uses composer for dependency management
+include_recipe "composer"
+
+include_recipe "#{cookbook_name}::users"
+
+directory node['elevator']['install_directory'] do
+	user node['elevator']['user']
+	group node['elevator']['group']
+	mode "02775"
+end
+
+git node['elevator']['install_directory'] do
+	repository node['elevator']['git']['repository']
+	revision node['elevator']['git']['ref']
+	user node['elevator']['user']
+	group node['elevator']['group']
+	notifies :install, "composer_project[#{node['elevator']['install_directory']}]"
+	notifies :run, "execute[update_application_models]", :delayed
+	if node.recipes.include?('elevator::web')
+		notifies :reload, "bluepill_service[elevatorWeb]", :delayed
+	end
+	if node.recipes.include?('elevator::transcode')
+		notifies :reload, "bluepill_service[elevatorTranscode]", :delayed
+	end
+	action :sync
+end
+
+
+execute "add_group_write_to_install_dir" do
+  command "chmod -R g+w #{node['elevator']['install_directory']}"
+end
+
+# Doctrine needs this as a temporary directory.
+directory "#{node['elevator']['install_directory']}/application/models/Proxies" do
+	mode "0777" # tempfile directory
+	action :create
+end
+
+composer_project node['elevator']['install_directory'] do
+	dev false
+ 	quiet false
+	action :nothing
+end
+
+# More dependencies, not covered by packaged modules
+# php_pear "mongo" do
+# 	action :install
+# end
+
+# this is a workaround for issues with the PHP cookbook
+# on 14.04
+# execute "enable_mongo_php" do
+# 	command "php5enmod mongo"
+# 	# should have a guard
+# end
+
+execute "update_application_models" do
+	cwd node['elevator']['install_directory']
+	command "php doctrine.php orm:generate-entities application/models"
+	notifies :run, "execute[update_application_proxies]", :immediately
+	action :nothing
+end
+
+execute "update_application_proxies" do
+	cwd node['elevator']['install_directory']
+	command "php doctrine.php orm:generate-proxies application/models/Proxies"
+	notifies :run, "execute[update_proxies_perms]", :immediately
+	action :nothing
+end
+
+execute "update_proxies_perms" do
+	cwd node['elevator']['install_directory']
+	command "chmod 777 application/models/Proxies"
+	action :nothing
+end

@@ -1,0 +1,88 @@
+# This file is managed by Chef
+# Do not make local changes here - they will be overwritten.
+#
+### copied from apache2 cookbook, web_app.conf.erb, and modified/extended for local use
+### this version only works with apache 2.4 and later.
+
+<%
+if @params[:use_ssl] then
+  @portnumber = 443
+else
+  @portnumber = 80
+end
+-%>
+<VirtualHost <%= @params[:vhost_address] %>:<%= @portnumber %>>
+
+  ServerName <%= @params[:server_name] %>
+  DocumentRoot <%= @params[:docroot] %>
+
+  <% if @params[:server_aliases] and not @params[:server_aliases].empty? -%>
+  ServerAlias <% @params[:server_aliases].each do |a| %><%= "#{a}" %> <% end -%>
+  <% end -%>
+
+  <% if @params[:directory_index] -%>
+  DirectoryIndex <%= [@params[:directory_index]].flatten.join " " %>
+  <% end -%>
+
+  # SSL support if enabled
+  <% if @params[:use_ssl] then -%>
+  SSLEngine on
+  SSLCertificateFile  <%= @params[:ssl_cert] %>
+  SSLCertificateKeyFile <%= @params[:ssl_key] %>
+    <% if @params[:ssl_intermediate_cert] -%>
+  SSLCertificateChainFile <%= @params[:ssl_intermediate_cert] %>
+    <% end -%>
+  <% end -%>
+  # End SSL
+
+  RewriteEngine On
+  <% if @params[:rewrite_rules] then -%>
+  # Rules from the rewrite_rules array of arrays in the site def
+    <% @params[:rewrite_rules].each do |rule_array| -%>
+  RewriteRule <%= rule_array.join " " %>
+    <% end -%>
+  <% end -%>
+
+  <% if @params[:alias_mappings] then -%>
+  # aliases are from alias_mappings hash in the site def
+    <% @params[:alias_mappings].each do |vpath, diskpath| -%>
+  Alias <%= vpath %> <%= diskpath %>
+    <% end -%>
+  <% end -%>
+
+  <% if @params[:raw_config_lines] then -%>
+  # Raw configuration lines from site config, or higher-level definitions
+    <% @params[:raw_config_lines].each do |conf_line| -%>
+  <%= conf_line %>
+    <% end -%>
+  # end raw config lines
+  <% end -%>
+
+  <Directory <%= @params[:docroot] %>>
+    Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
+    AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
+    Require all granted
+  </Directory>
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+
+  <Location /server-status>
+    SetHandler server-status
+    <RequireAny>
+      Require host 127.0.0.1
+      <% if @params[:server_status_allow] -%>
+        <% @params[:server_status_allow].each do |ip| -%>
+          Require host <%= ip %>
+        <% end -%>
+      <% end -%>
+    </RequireAny>
+  </Location>
+
+  LogLevel <%= @params[:log_level] %>
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>_<%= @portnumber %>_error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>_<%= @portnumber %>_access.log combined
+
+</VirtualHost>
