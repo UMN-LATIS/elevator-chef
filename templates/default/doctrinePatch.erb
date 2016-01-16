@@ -1,0 +1,326 @@
+diff --git a/docs/en/reference/platforms.rst b/docs/en/reference/platforms.rst
+index 5ea986f..da78e39 100644
+--- a/docs/en/reference/platforms.rst
++++ b/nano
+@@ -55,6 +55,7 @@ PostgreSQL
+ -  ``PostgreSqlPlatform`` for all versions.
+ -  ``PostgreSQL91Platform`` for version 9.1 and above.
+ -  ``PostgreSQL92Platform`` for version 9.2 and above.
++-  ``PostgreSQL94Platform`` for version 9.4 and above.
+
+ SAP Sybase SQL Anywhere
+ ^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/docs/en/reference/types.rst b/docs/en/reference/types.rst
+index 564ac4e..823a24a 100644
+--- a/docs/en/reference/types.rst
++++ b/docs/en/reference/types.rst
+@@ -689,11 +689,15 @@ Please also notice the mapping specific footnotes for additional information.
+ |                   |               |                          |         +----------------------------------------------------------+
+ |                   |               |                          |         | ``LONGTEXT`` [20]_                                       |
+ |                   |               +--------------------------+---------+----------------------------------------------------------+
+-|                   |               | **PostgreSQL**           | >= 9.2  | ``JSON``                                                 |
++|                   |               | **PostgreSQL**           | < 9.2   | ``TEXT`` [1]_                                            |
+ |                   |               |                          +---------+----------------------------------------------------------+
+-|                   |               |                          | < 9.2   | ``TEXT`` [1]_                                            |
+-|                   |               +--------------------------+---------+                                                          |
+-|                   |               | **SQL Anywhere**         | *all*   |                                                          |
++|                   |               |                          | < 9.4   | ``JSON``                                                 |
++|                   |               |                          +---------+----------------------------------------------------------+
++|                   |               |                          | >= 9.4  | ``JSON`` [21]_                                           |
++|                   |               |                          |         +----------------------------------------------------------+
++|                   |               |                          |         | ``JSONB`` [22]_                                          |
++|                   |               +--------------------------+---------+----------------------------------------------------------+
++|                   |               | **SQL Anywhere**         | *all*   | ``TEXT`` [1]_                                            |
+ |                   |               +--------------------------+         |                                                          |
+ |                   |               | **Drizzle**              |         |                                                          |
+ |                   |               +--------------------------+---------+----------------------------------------------------------+
+@@ -744,7 +748,7 @@ Please also notice the mapping specific footnotes for additional information.
+ .. [10] Used if **unsigned** attribute is set to ``true`` in the column definition (default ``false``).
+ .. [11] Used if **autoincrement** attribute is set to ``true`` in the column definition (default ``false``).
+ .. [12] Chosen if the column definition has the **autoincrement** attribute set to ``false`` (default).
+-.. [13] Chosen if the column definition not contains the **version** option inside the **platformOptions**
++.. [13] Chosen if the column definition does not contain the **version** option inside the **platformOptions**
+         attribute array or is set to ``false`` which marks it as a non-locking information column.
+ .. [14] Chosen if the column definition contains the **version** option inside the **platformOptions**
+         attribute array and is set to ``true`` which marks it as a locking information column.
+@@ -759,6 +763,10 @@ Please also notice the mapping specific footnotes for additional information.
+ .. [18] Chosen if the column length is less or equal to **2 ^ 16 - 1 = 65535**.
+ .. [19] Chosen if the column length is less or equal to **2 ^ 24 - 1 = 16777215**.
+ .. [20] Chosen if the column length is less or equal to **2 ^ 32 - 1 = 4294967295** or empty.
++.. [21] Chosen if the column definition does not contain the **jsonb** option inside the **platformOptions**
++        attribute array or is set to ``false``.
++.. [22] Chosen if the column definition contains the **jsonb** option inside the **platformOptions**
++        attribute array and is set to ``true``.
+
+ Detection of Database Types
+ ---------------------------
+diff --git a/lib/Doctrine/DBAL/Driver/AbstractPostgreSQLDriver.php b/lib/Doctrine/DBAL/Driver/AbstractPostgreSQLDriver.php
+index 4ad7cbe..4407364 100644
+--- a/lib/Doctrine/DBAL/Driver/AbstractPostgreSQLDriver.php
++++ b/lib/Doctrine/DBAL/Driver/AbstractPostgreSQLDriver.php
+@@ -24,6 +24,7 @@
+ use Doctrine\DBAL\Exception;
+ use Doctrine\DBAL\Platforms\PostgreSQL91Platform;
+ use Doctrine\DBAL\Platforms\PostgreSQL92Platform;
++use Doctrine\DBAL\Platforms\PostgreSQL94Platform;
+ use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+ use Doctrine\DBAL\Schema\PostgreSqlSchemaManager;
+ use Doctrine\DBAL\VersionAwarePlatformDriver;
+@@ -109,6 +110,8 @@ public function createDatabasePlatformForVersion($version)
+         $version      = $majorVersion . '.' . $minorVersion . '.' . $patchVersion;
+
+         switch(true) {
++            case version_compare($version, '9.4', '>='):
++                return new PostgreSQL94Platform();
+             case version_compare($version, '9.2', '>='):
+                 return new PostgreSQL92Platform();
+             case version_compare($version, '9.1', '>='):
+diff --git a/lib/Doctrine/DBAL/Platforms/Keywords/PostgreSQL94Keywords.php b/lib/Doctrine/DBAL/Platforms/Keywords/PostgreSQL94Keywords.php
+new file mode 100644
+index 0000000..dfb2a06
+--- /dev/null
++++ b/lib/Doctrine/DBAL/Platforms/Keywords/PostgreSQL94Keywords.php
+@@ -0,0 +1,54 @@
++<?php
++/*
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ *
++ * This software consists of voluntary contributions made by many individuals
++ * and is licensed under the MIT license. For more information, see
++ * <http://www.doctrine-project.org>.
++ */
++
++namespace Doctrine\DBAL\Platforms\Keywords;
++
++/**
++ * PostgreSQL 9.4 reserved keywords list.
++ *
++ * @author Matteo Beccati <matteo@beccati.com>
++ * @link   www.doctrine-project.org
++ * @since  2.6
++ */
++class PostgreSQL94Keywords extends PostgreSQL92Keywords
++{
++    /**
++     * {@inheritdoc}
++     */
++    public function getName()
++    {
++        return 'PostgreSQL94';
++    }
++
++    /**
++     * {@inheritdoc}
++     *
++     * @link http://www.postgresql.org/docs/9.4/static/sql-keywords-appendix.html
++     */
++    protected function getKeywords()
++    {
++        $parentKeywords = array_diff(parent::getKeywords(), array(
++            'OVER',
++        ));
++
++        return array_merge($parentKeywords, array(
++            'LATERAL',
++        ));
++    }
++}
+diff --git a/lib/Doctrine/DBAL/Platforms/PostgreSQL94Platform.php b/lib/Doctrine/DBAL/Platforms/PostgreSQL94Platform.php
+new file mode 100644
+index 0000000..be55b4b
+--- /dev/null
++++ b/lib/Doctrine/DBAL/Platforms/PostgreSQL94Platform.php
+@@ -0,0 +1,59 @@
++<?php
++/*
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ *
++ * This software consists of voluntary contributions made by many individuals
++ * and is licensed under the MIT license. For more information, see
++ * <http://www.doctrine-project.org>.
++ */
++
++namespace Doctrine\DBAL\Platforms;
++
++/**
++ * Provides the behavior, features and SQL dialect of the PostgreSQL 9.4 database platform.
++ *
++ * @author Matteo Beccati <matteo@beccati.com>
++ * @link   www.doctrine-project.org
++ * @since  2.6
++ */
++class PostgreSQL94Platform extends PostgreSQL92Platform
++{
++    /**
++     * {@inheritdoc}
++     */
++    public function getJsonTypeDeclarationSQL(array $field)
++    {
++        if (!empty($field['jsonb'])) {
++            return 'JSONB';
++        }
++
++        return 'JSON';
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    protected function getReservedKeywordsClass()
++    {
++        return 'Doctrine\DBAL\Platforms\Keywords\PostgreSQL94Keywords';
++    }
++
++    /**
++     * {@inheritdoc}
++     */
++    protected function initializeDoctrineTypeMappings()
++    {
++        parent::initializeDoctrineTypeMappings();
++        $this->doctrineTypeMapping['jsonb'] = 'json_array';
++    }
++}
+diff --git a/lib/Doctrine/DBAL/Schema/PostgreSqlSchemaManager.php b/lib/Doctrine/DBAL/Schema/PostgreSqlSchemaManager.php
+index ee2606d..4a947f2 100644
+--- a/lib/Doctrine/DBAL/Schema/PostgreSqlSchemaManager.php
++++ b/lib/Doctrine/DBAL/Schema/PostgreSqlSchemaManager.php
+@@ -311,6 +311,7 @@ protected function _getPortableTableColumnDefinition($tableColumn)
+
+         $precision = null;
+         $scale = null;
++        $jsonb = null;
+
+         $dbType = strtolower($tableColumn['type']);
+         if (strlen($tableColumn['domain_type']) && !$this->_platform->hasDoctrineTypeMappingFor($tableColumn['type'])) {
+@@ -378,6 +379,10 @@ protected function _getPortableTableColumnDefinition($tableColumn)
+             case 'year':
+                 $length = null;
+                 break;
++
++            // PostgreSQL 9.4+ only
++            case 'jsonb':
++                $jsonb = true;
+         }
+
+         if ($tableColumn['default'] && preg_match("('([^']+)'::)", $tableColumn['default'], $match)) {
+@@ -405,6 +410,10 @@ protected function _getPortableTableColumnDefinition($tableColumn)
+             $column->setPlatformOption('collation', $tableColumn['collation']);
+         }
+
++        if ($column->getType()->getName() === 'json_array') {
++            $column->setPlatformOption('jsonb', $jsonb);
++        }
++
+         return $column;
+     }
+ }
+diff --git a/tests/Doctrine/Tests/DBAL/Driver/AbstractPostgreSQLDriverTest.php b/tests/Doctrine/Tests/DBAL/Driver/AbstractPostgreSQLDriverTest.php
+index b1df97f..bbf3870 100644
+--- a/tests/Doctrine/Tests/DBAL/Driver/AbstractPostgreSQLDriverTest.php
++++ b/tests/Doctrine/Tests/DBAL/Driver/AbstractPostgreSQLDriverTest.php
+@@ -63,7 +63,11 @@ protected function getDatabasePlatformsForVersions()
+             array('9.2', 'Doctrine\DBAL\Platforms\PostgreSQL92Platform'),
+             array('9.2.0', 'Doctrine\DBAL\Platforms\PostgreSQL92Platform'),
+             array('9.2.1', 'Doctrine\DBAL\Platforms\PostgreSQL92Platform'),
+-            array('10', 'Doctrine\DBAL\Platforms\PostgreSQL92Platform'),
++            array('9.3.6', 'Doctrine\DBAL\Platforms\PostgreSQL92Platform'),
++            array('9.4', 'Doctrine\DBAL\Platforms\PostgreSQL94Platform'),
++            array('9.4.0', 'Doctrine\DBAL\Platforms\PostgreSQL94Platform'),
++            array('9.4.1', 'Doctrine\DBAL\Platforms\PostgreSQL94Platform'),
++            array('10', 'Doctrine\DBAL\Platforms\PostgreSQL94Platform'),
+         );
+     }
+
+diff --git a/tests/Doctrine/Tests/DBAL/Functional/Schema/PostgreSqlSchemaManagerTest.php b/tests/Doctrine/Tests/DBAL/Functional/Schema/PostgreSqlSchemaManagerTest.php
+index 94b3368..2fbea86 100644
+--- a/tests/Doctrine/Tests/DBAL/Functional/Schema/PostgreSqlSchemaManagerTest.php
++++ b/tests/Doctrine/Tests/DBAL/Functional/Schema/PostgreSqlSchemaManagerTest.php
+@@ -3,6 +3,7 @@
+ namespace Doctrine\Tests\DBAL\Functional\Schema;
+
+ use Doctrine\DBAL\Platforms\AbstractPlatform;
++use Doctrine\DBAL\Platforms\PostgreSQL94Platform;
+ use Doctrine\DBAL\Schema;
+ use Doctrine\DBAL\Types\Type;
+
+@@ -372,6 +373,23 @@ public function testPartialIndexes()
+         );
+     }
+
++    public function testJsonbColumn()
++    {
++        if (!$this->_sm->getDatabasePlatform() instanceof PostgreSQL94Platform) {
++            $this->markTestSkipped("Requires PostgresSQL 9.4+");
++            return;
++        }
++
++        $table = new Schema\Table('test_jsonb');
++        $table->addColumn('foo', 'json_array')->setPlatformOption('jsonb', true);
++        $this->_sm->dropAndCreateTable($table);
++
++        /** @var Schema\Column[] $columns */
++        $columns = $this->_sm->listTableColumns('test_jsonb');
++
++        $this->assertEquals('json_array', $columns['foo']->getType()->getName());
++        $this->assertEquals(true, $columns['foo']->getPlatformOption('jsonb'));
++    }
+ }
+
+ class MoneyType extends Type
+diff --git a/tests/Doctrine/Tests/DBAL/Platforms/PostgreSQL94PlatformTest.php b/tests/Doctrine/Tests/DBAL/Platforms/PostgreSQL94PlatformTest.php
+new file mode 100644
+index 0000000..723a301
+--- /dev/null
++++ b/tests/Doctrine/Tests/DBAL/Platforms/PostgreSQL94PlatformTest.php
+@@ -0,0 +1,30 @@
++<?php
++
++namespace Doctrine\Tests\DBAL\Platforms;
++
++use Doctrine\DBAL\Platforms\PostgreSQL94Platform;
++
++class PostgreSQL94PlatformTest extends PostgreSQL92PlatformTest
++{
++    /**
++     * {@inheritdoc}
++     */
++    public function createPlatform()
++    {
++        return new PostgreSQL94Platform();
++    }
++
++    public function testReturnsJsonTypeDeclarationSQL()
++    {
++        parent::testReturnsJsonTypeDeclarationSQL();
++        $this->assertSame('JSON', $this->_platform->getJsonTypeDeclarationSQL(array('jsonb' => false)));
++        $this->assertSame('JSONB', $this->_platform->getJsonTypeDeclarationSQL(array('jsonb' => true)));
++    }
++
++    public function testInitializesJsonTypeMapping()
++    {
++        parent::testInitializesJsonTypeMapping();
++        $this->assertTrue($this->_platform->hasDoctrineTypeMappingFor('jsonb'));
++        $this->assertEquals('json_array', $this->_platform->getDoctrineTypeMapping('jsonb'));
++    }
++}
+

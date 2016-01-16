@@ -55,8 +55,23 @@ end
 composer_project node['elevator']['install_directory'] do
 	dev false
  	quiet false
+	notifies :run, "execute[composer_doctrine_hack]", :delayed
 	action :nothing
 end
+
+
+# TODO: this is a hack while we wait for doctrine 2.6 to ship
+
+template "#{node['elevator']['install_directory']}/vendor/doctrine/dbal/postgresPatch" do
+	source "doctrinePatch.erb"
+end
+
+execute "composer_doctrine_hack" do
+	cwd "#{node['elevator']['install_directory']}/vendor/doctrine/dbal"
+	command "patch -p1 < postgresPatch"
+	action :nothing
+end
+
 
 # More dependencies, not covered by packaged modules
 # php_pear "mongo" do
