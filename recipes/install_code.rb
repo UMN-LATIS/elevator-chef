@@ -55,8 +55,7 @@ end
 composer_project node['elevator']['install_directory'] do
 	dev false
  	quiet false
- 	notifies :run, "template[#{node['elevator']['install_directory']}/vendor/doctrine/dbal/postgresPatch]", :immediately
-	notifies :run, "execute[composer_doctrine_hack]", :delayed
+ 	notifies :create, "template[#{node['elevator']['install_directory']}/vendor/doctrine/dbal/postgresPatch]", :delayed
 	action :nothing
 end
 
@@ -66,6 +65,7 @@ end
 template "#{node['elevator']['install_directory']}/vendor/doctrine/dbal/postgresPatch" do
 	source "doctrinePatch.erb"
 	action :nothing
+	notifies :run, "execute[composer_doctrine_hack]", :delayed
 end
 
 execute "composer_doctrine_hack" do
