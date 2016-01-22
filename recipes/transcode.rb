@@ -61,6 +61,7 @@ package "libvips-tools"
 package "openslide-tools"
 
 include_recipe "r"
+r_package "ggplot2"
 
 
 service "xvfb" do
