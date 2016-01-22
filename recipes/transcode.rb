@@ -60,6 +60,8 @@ package "Xvfb"
 package "libvips-tools"
 package "openslide-tools"
 
+include_recipe "r"
+
 
 service "xvfb" do
   supports :restart => true, :start => true, :stop => true, :reload => true
