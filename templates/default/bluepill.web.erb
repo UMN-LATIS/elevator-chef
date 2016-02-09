@@ -17,12 +17,34 @@ Bluepill.application("elevatorWeb") do |app|
     process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
   end
 
-  app.process("reindex") do |process|
-    process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive updateIndexes"
+  2.times do |i|
+    app.process("reindex-#{i}") do |process|
+      process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive updateIndexes"
+      process.group = "dcl"
+      process.daemonize = true
+      process.pid_file = "/tmp/updateIndexes-#{i}"
+      process.stdout = process.stderr = "/tmp/updateIndexes.log"
+      process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+    end
+  end
+
+  2.times do |i|
+    app.process("rebuildCache-#{i}") do |process|
+      process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive rebuildCache"
+      process.group = "dcl"
+      process.daemonize = true
+      process.pid_file = "/tmp/rebuildCache-#{i}"
+      process.stdout = process.stderr = "/tmp/rebuildCache.log"
+      process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+    end
+  end
+
+  app.process("populateCacheTube") do |process|
+    process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive populateCacheTube"
     process.group = "dcl"
     process.daemonize = true
-    process.pid_file = "/tmp/updateIndexes"
-    process.stdout = process.stderr = "/tmp/updateIndexes.log"
+    process.pid_file = "/tmp/populateCacheTube"
+    process.stdout = process.stderr = "/tmp/populateCacheTube.log"
     process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
   end
 

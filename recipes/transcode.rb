@@ -60,6 +60,8 @@ package "Xvfb"
 package "libvips-tools"
 package "openslide-tools"
 
+
+node.default["r"]["install_method"] = "package"
 include_recipe "r"
 r_package "ggplot2"
 

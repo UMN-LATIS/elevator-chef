@@ -25,3 +25,4 @@ depends 'bluepill'
 depends "python"
 depends 'chef-client'
 depends 'tar'
+depends 'r'
