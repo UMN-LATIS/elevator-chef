@@ -26,7 +26,7 @@ default['elevator']['config']['web_hostname'] = 'localhost'
 default['elevator']['config']['base_url'] = "http://localhost/"
 ### the following value is not suitable for production, development only
 ### 0 - no logs, 1 - errors, 2 - debug, 3 - informational, 4 - all
-default['elevator']['config']['log_threshold'] = '4'
+default['elevator']['config']['log_threshold'] = '1'
 # blank is default, leaves in application/logs directory
 # for production, recommend moving elsewhere and ensuring directory
 # is writable by web server.
@@ -77,3 +77,5 @@ default['elevator']['config']['ldap']['uri'] = "ldaps://ldapauth.umn.edu"
 default['elevator']['config']['ldap']['search_base'] = "ou=People,o=University of Minnesota,c=US"
 
 default['elevator']['config']['jwplayer'] = ""
+default['elevator']['config']['apiKey'] = ""
+default['elevator']['config']['apiSecret'] = ""
