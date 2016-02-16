@@ -9,6 +9,9 @@ package "php5-apcu"
 package "php5-mongo"
 package "php5-imagick"
 
+node.set['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
+
+
 # Before running composer, let's cache some well-known remote ssh keys.  Saves
 # against some ways it'll break (wanting to be interactive).
 ssh_known_hosts_entry 'github.com'
