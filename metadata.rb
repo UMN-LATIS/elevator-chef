@@ -8,6 +8,8 @@ version          '0.5.0'
 
 supports "ubuntu", "14.04"
 
+depends 'iptables', '= 1.1.0'
+
 depends "apt"
 depends "git"
 depends "ntp"
