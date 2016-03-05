@@ -19,7 +19,8 @@ default['elevator']['db']['dbprefix'] = ''
 default['elevator']['elasticsearch']['hostname'] = 'localhost'
 default['elevator']['elasticsearch']['port'] = '9200'
 default['elevator']['elasticsearch']['version'] = '1.7.3'
-
+default['elevator']['redis']['hostname'] = 'localhost'
+default['elevator']['redis']['port'] = '6379'
 default['elevator']['beanstalkd']['hostname'] = 'localhost'
 
 default['elevator']['config']['web_hostname'] = 'localhost'

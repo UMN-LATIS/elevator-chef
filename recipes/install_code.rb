@@ -8,6 +8,7 @@ package "php5-ldap"
 package "php5-apcu"
 package "php5-mongo"
 package "php5-imagick"
+package "php5-redis"
 
 node.set['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
 

@@ -270,6 +270,8 @@ $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 86400;
+$config['sess_driver'] = 'redis';
+$config['sess_save_path'] = 'tcp://<%= node['elevator']['redis']['hostname'] %>:<%= node['elevator']['redis']['port'] %>';
 
 /*
 |--------------------------------------------------------------------------
@@ -404,6 +406,9 @@ $config['beanstalkd'] = "<%= node['elevator']['beanstalkd']['hostname'] %>"; // 
 $config['scratchSpace'] = "<%= node['elevator']['config']['scratchspace'] %>";
 
 $config['elastic'] = "<%= node['elevator']['elasticsearch']['hostname'] %>:<%= node['elevator']['elasticsearch']['port'] %>"; // elastic ip:port
+
+$config['redis'] = "<%= node['elevator']['redis']['hostname'] %>"; // elastic ip:port
+$config['redisPort'] = "<%= node['elevator']['redis']['port'] %>";
 
 /**
  * dcl caching

@@ -28,3 +28,4 @@ depends "python"
 depends 'chef-client'
 depends 'tar'
 depends 'r'
+depends 'L7-redis'
