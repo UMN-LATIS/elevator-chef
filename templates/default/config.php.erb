@@ -406,6 +406,7 @@ $config['beanstalkd'] = "<%= node['elevator']['beanstalkd']['hostname'] %>"; // 
 $config['scratchSpace'] = "<%= node['elevator']['config']['scratchspace'] %>";
 
 $config['elastic'] = "<%= node['elevator']['elasticsearch']['hostname'] %>:<%= node['elevator']['elasticsearch']['port'] %>"; // elastic ip:port
+$config['elasticIndex'] = "<%= node['elevator']['elasticsearch']['index'] %>";
 
 $config['redis'] = "<%= node['elevator']['redis']['hostname'] %>"; // elastic ip:port
 $config['redisPort'] = "<%= node['elevator']['redis']['port'] %>";

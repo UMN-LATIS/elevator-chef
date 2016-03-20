@@ -91,7 +91,14 @@ template '/etc/bluepill/elevatorTranscode.pill' do
   source 'bluepill.transcode.erb'
 end
 
-
+cron 'clean_storage' do
+  action :create
+  minute '0'
+  hour '1'
+  weekday '*'
+  user 'root'
+  command %W{/usr/bin/php #{node['elevator']['install_directory']}/index.php beltdrive cleanupSource}.join(' ')
+end
 
 bluepill_service 'elevatorTranscode' do
   action [:enable, :load, :start]
