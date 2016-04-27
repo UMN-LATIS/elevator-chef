@@ -10,8 +10,8 @@ email = data_bag_item("elevator", "emailuser")
 template "#{node['elevator']['install_directory']}/application/config/email.php" do
 	source "email.php.erb"
 	variables ({
-		:emailuser => email['username'],
-		:emailpass => email['password']
+		:emailuser => email[node.chef_environment]['username'],
+		:emailpass => email[node.chef_environment]['password']
 	})
 end
 
@@ -20,8 +20,8 @@ databag = data_bag_item("elevator", "dbuser")
 template "#{node['elevator']['install_directory']}/application/config/database.php" do
 	source "database.php.erb"
 	variables ({
-		:dbuser => databag['username'],
-		:dbpassword => databag['password']
+		:dbuser => databag[node.chef_environment]['username'],
+		:dbpassword => databag[node.chef_environment]['password']
 	})
 end
 

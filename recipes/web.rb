@@ -58,21 +58,21 @@ keyPath =  "/etc/apache2/ssl/elevator.key"
 intermediatePath =  "/etc/apache2/ssl/intermediate.crt"
 
 file certPath do
-  content databag["certificate"]
+  content databag[node.chef_environment]["certificate"]
   owner "root"
   group "root"
   mode 0600
 end
 
 file keyPath do
-  content databag["key"]
+  content databag[node.chef_environment]["key"]
   owner "root"
   group "root"
   mode 0600
 end
 
 file intermediatePath do
-  content databag["intermediate"]
+  content databag[node.chef_environment]["intermediate"]
   owner "root"
   group "root"
   mode 0600
