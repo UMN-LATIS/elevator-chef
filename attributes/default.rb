@@ -57,6 +57,7 @@ default['elevator']['config']['binaries']['meshlabPath'] = 'meshlabserver'
 default['elevator']['config']['binaries']['nxsbuild_dir'] = '/usr/local/bin/nxsbuild'
 default['elevator']['config']['binaries']['vipsPath'] = 'vips'
 default['elevator']['config']['binaries']['gnuPlot'] = 'gnuplot'
+default['elevator']['config']['binaries']['spatialMedia'] = '/usr/local/bin/spatial-media/spatialmedia'
 
 
 # TODO: include options for XSS filtering and CSRF token

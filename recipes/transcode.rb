@@ -87,9 +87,22 @@ include_recipe "elevator::nxsbuild"
 
 include_recipe "bluepill"
 
+
+git '/usr/local/bin/spatial-media' do
+  repository 'https://github.com/google/spatial-media.git'
+  revision 'master'
+  action :sync
+end
+
+
 template '/etc/bluepill/elevatorTranscode.pill' do
   source 'bluepill.transcode.erb'
 end
+
+template '/etc/ImageMagick/policy.xml' do
+  source 'imagemagick.erb'
+end
+
 
 cron 'clean_storage' do
   action :create
