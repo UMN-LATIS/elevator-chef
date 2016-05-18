@@ -1,8 +1,13 @@
 # configure the code
 
+ldap = data_bag_item("elevator", "ldap")
 
 template "#{node['elevator']['install_directory']}/application/config/config.php" do
 	source "config.php.erb"
+	variables ({
+		:ldapuser => ldap[node.chef_environment]['ldapusername'],
+		:ldappass => ldap[node.chef_environment]['ldappassword']
+	})
 end
 
 email = data_bag_item("elevator", "emailuser")

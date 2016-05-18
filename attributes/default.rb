@@ -76,11 +76,17 @@ default['elevator']['php_short_open_tag'] = true
 
 default['elevator']['deploy_environment'] = "development"
 
+default['elevator']['config']['shibboleth']['login'] = "";
+default['elevator']['config']['shibboleth']['logout'] = "";
+
 # LDAP configuration.
 default['elevator']['config']['ldap']['username'] = ""
 default['elevator']['config']['ldap']['password'] = ""
-default['elevator']['config']['ldap']['uri'] = "ldaps://ldapauth.umn.edu"
+default['elevator']['config']['ldap']['uri'] = ""
 default['elevator']['config']['ldap']['search_base'] = "ou=People,o=University of Minnesota,c=US"
+default['elevator']['config']['authHelper'] = "authHelper"
+
+
 
 default['elevator']['config']['jwplayer'] = ""
 default['elevator']['config']['apiKey'] = ""

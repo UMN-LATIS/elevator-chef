@@ -56,4 +56,13 @@ Bluepill.application("elevatorWeb") do |app|
     process.stdout = process.stderr = "/tmp/migrateCollections.log"
     process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
   end
+
+  app.process("urlImport") do |process|
+    process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive urlImport"
+    process.group = "dcl"
+    process.daemonize = true
+    process.pid_file = "/tmp/urlImport"
+    process.stdout = process.stderr = "/tmp/urlImport.log"
+    process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+  end
 end

@@ -445,10 +445,13 @@ $config['vipsBinary'] = '<%= node['elevator']['config']['binaries']['vipsPath'] 
 
 // LDAP username and password.
 // Application should bind anonymously if not set, or set to blanks.
-$config['ldapUsername'] = '<%= node['elevator']['config']['ldap']['username'] %>';
-$config['ldapPassword'] = '<%= node['elevator']['config']['ldap']['password'] %>';
+$config['ldapUsername'] = '<%= @ldapuser %>';
+$config['ldapPassword'] = '<%= @ldappass %>';
 $config['ldapURI'] = '<%= node['elevator']['config']['ldap']['uri'] %>';
 $config['ldapSearchBase'] = '<%= node['elevator']['config']['ldap']['search_base'] %>';
+
+$config['shibbolethLogin'] = '<%= node['elevator']['config']['shibboleth']['login'] %>';
+$config['shibbolethLogout'] = '<%= node['elevator']['config']['shibboleth']['logout'] %>';
 
 $config['jwplayer'] = '<%= node['elevator']['config']['jwplayer'] %>';
 
@@ -456,6 +459,8 @@ $config['missingSiteURL'] = '<%= node['elevator']['config']['missingSiteURL'] %>
 
 $config['apiKey'] = '<%= node['elevator']['config']['apiKey'] %>';
 $config['apiSecret'] = '<%= node['elevator']['config']['apiSecret'] %>';
+
+$config['authHelper'] = '<%= node['elevator']['config']['authHelper'] %>';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
