@@ -4,7 +4,7 @@ maintainer_email 'buysse@umn.edu'
 license          'All rights reserved'
 description      'Installs/Configures --test-kitchen'
 long_description 'Installs/Configures --test-kitchen'
-version          '0.5.0'
+version          '0.6.0'
 
 supports "ubuntu", "14.04"
 
@@ -29,3 +29,4 @@ depends 'chef-client'
 depends 'tar'
 depends 'r'
 depends 'L7-redis'
+depends 'chef-msttcorefonts'

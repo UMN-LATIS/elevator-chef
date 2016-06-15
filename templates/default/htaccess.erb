@@ -4,6 +4,9 @@ php_value session.gc_maxlifetime 43200
 
 RewriteEngine On
 
+php_value upload_max_filesize 500M
+php_value post_max_size 510M
+
 SetEnv CI_ENV <%=node['elevator']['deploy_environment'] %>
 
 # For PHP applications, force inclusion on the ShibPoseur controller file
