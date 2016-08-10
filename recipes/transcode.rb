@@ -15,7 +15,7 @@ include_recipe "#{cookbook_name}::users"
 include_recipe "#{cookbook_name}::install_code"
 include_recipe "#{cookbook_name}::configure_code"
 
-include_recipe "chef-msttcorefonts"
+#include_recipe "chef-msttcorefonts"
 
 # We need a PPA for some of this software
 apt_repository "mc3man_trusty-media" do
