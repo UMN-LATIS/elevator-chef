@@ -86,6 +86,10 @@ default['elevator']['config']['ldap']['uri'] = ""
 default['elevator']['config']['ldap']['search_base'] = "ou=People,o=University of Minnesota,c=US"
 default['elevator']['config']['authHelper'] = "authHelper"
 
+default['elevator']['config']['oAuthClient'] = ""
+default['elevator']['config']['oAuthSecret'] = ""
+default['elevator']['config']['oAuthApplication'] = ""
+default['elevator']['config']['oAuthDomain'] = ""
 
 
 default['elevator']['config']['jwplayer'] = ""
