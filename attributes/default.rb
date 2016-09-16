@@ -91,6 +91,9 @@ default['elevator']['config']['oAuthSecret'] = ""
 default['elevator']['config']['oAuthApplication'] = ""
 default['elevator']['config']['oAuthDomain'] = ""
 
+default['elevator']['config']['labels']['remoteLogin'] = "University"
+default['elevator']['config']['labels']['guestLogin'] = "Guest"
+
 
 default['elevator']['config']['jwplayer'] = ""
 default['elevator']['config']['apiKey'] = ""

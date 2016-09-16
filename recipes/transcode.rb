@@ -97,6 +97,16 @@ git '/usr/local/bin/spatial-media' do
 end
 
 
+include_recipe "python"
+python_pip "pillow"
+
+git '/usr/local/bin/imagepacker' do
+  repository 'https://github.com/UMN-LATIS/imagepacker.git'
+  revision 'master'
+  action :sync
+end
+
+
 template '/etc/bluepill/elevatorTranscode.pill' do
   source 'bluepill.transcode.erb'
 end
