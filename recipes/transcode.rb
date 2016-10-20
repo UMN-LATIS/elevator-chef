@@ -15,7 +15,7 @@ include_recipe "#{cookbook_name}::users"
 include_recipe "#{cookbook_name}::install_code"
 include_recipe "#{cookbook_name}::configure_code"
 
-#include_recipe "chef-msttcorefonts"
+include_recipe "chef-msttcorefonts"
 
 # We need a PPA for some of this software
 apt_repository "mc3man_trusty-media" do
@@ -50,6 +50,21 @@ execute 'hold_old_openjpeg' do
 end
 
 
+###
+# libtiff4 is missing on ubuntu 14.04
+# and is required for libpoppler / poppler, which provides pdfimages
+###
+
+remote_file "/tmp/libtiff4.deb" do
+  source "http://old-releases.ubuntu.com/ubuntu/pool/universe/t/tiff3/libtiff4_3.9.7-2ubuntu1_amd64.deb"
+  mode 0644
+end
+
+dpkg_package "libtiff4" do
+  source "/tmp/libtiff4.deb"
+  action :install
+end
+
 package "imagemagick"
 package "ffmpeg"  # TODO: might not include qtfaststart
 package "yamdi"
@@ -61,7 +76,13 @@ package "libvips42"
 package "Xvfb"
 package "libvips-tools"
 package "openslide-tools"
-
+package "libreoffice"
+package "libreoffice-script-provider-python"
+package "unoconv"
+package "ghostscript"
+package "libpoppler46"
+package "poppler-utils"
+package "tesseract-ocr"
 
 node.default["r"]["install_method"] = "package"
 node.default["r"]["cran_mirror"] = "http://cran.rstudio.com/"
@@ -99,6 +120,7 @@ end
 
 include_recipe "python"
 python_pip "pillow"
+python_pip "pypdfocr"
 
 git '/usr/local/bin/imagepacker' do
   repository 'https://github.com/UMN-LATIS/imagepacker.git'

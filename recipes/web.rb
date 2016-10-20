@@ -28,6 +28,8 @@ include_recipe "apache2::mod_headers"
 include_recipe "apache2::mod_php5"
 include_recipe "cookbook-shibboleth::sp"
 
+package "sendmail"
+
 # disable the default site
 apache_site "000-default" do
   enable false

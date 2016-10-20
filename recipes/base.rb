@@ -19,6 +19,8 @@ end
 
 include_recipe "apt"
 
+#include_recipe "apt-upgrade-once"
+
 # Set the node attributes for ntp
 node.default['ntp']['servers'] = ['pool.ntp.org'];
 # include the recipe

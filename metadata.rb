@@ -11,6 +11,7 @@ supports "ubuntu", "14.04"
 depends 'iptables', '= 1.1.0'
 
 depends "apt"
+depends "apt-upgrade-once"
 depends "git"
 depends "ntp"
 depends "application"

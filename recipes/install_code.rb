@@ -29,6 +29,13 @@ directory node['elevator']['install_directory'] do
 	mode "02775"
 end
 
+# remote_file "/etc/ssl/certs/ca-certificates.crt" do
+#   source "http://s3.amazonaws.com/elevator-assets/ca-certificates.crt"
+#   mode 0755
+# end
+
+
+
 git node['elevator']['install_directory'] do
 	repository node['elevator']['git']['repository']
 	revision node['elevator']['git']['ref']
