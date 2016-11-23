@@ -12,6 +12,15 @@ package "php5-redis"
 
 node.set['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
 
+file "/etc/php5/apache2/conf.d/50-tune-opcache.ini" do
+    owner "root"
+    group "root"
+    mode "0755"
+    action :create
+    content "opcache.max_accelerated_files=12000\nopcache.memory_consumption=256\nopcache.interned_strings_buffer=16\nopcache.fast_shutdown=1\n"
+    notifies :restart, resources(:service => "apache2")
+end
+
 
 # Before running composer, let's cache some well-known remote ssh keys.  Saves
 # against some ways it'll break (wanting to be interactive).
@@ -20,6 +29,7 @@ ssh_known_hosts_entry 'github.umn.edu'
 
 # set up the web application, which uses composer for dependency management
 include_recipe "composer"
+include_recipe "composer::self_update"
 
 include_recipe "#{cookbook_name}::users"
 
