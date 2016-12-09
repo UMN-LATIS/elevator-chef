@@ -10,6 +10,9 @@ cookbook "cookbook-shibboleth",
 cookbook "r",
   git: "https://github.com/stevendanna/cookbook-r.git"
 
+cookbook "chef-msttcorefonts",
+  git: "https://github.com/captnswing/chef-msttcorefonts.git"
+
 cookbook "apache2", "~> 3.0.0"
 
 metadata
