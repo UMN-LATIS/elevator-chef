@@ -14,8 +14,6 @@
 include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::users"
 
-include_recipe "#{cookbook_name}::install_code"
-
 
 # Install apache web server
 node.set['apache']['mpm'] = 'prefork'
@@ -27,6 +25,20 @@ include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_headers"
 include_recipe "apache2::mod_php5"
 include_recipe "cookbook-shibboleth::sp"
+
+
+file "/etc/php5/apache2/conf.d/50-tune-opcache.ini" do
+    owner "root"
+    group "root"
+    mode "0755"
+    action :create
+    content "opcache.max_accelerated_files=12000\nopcache.memory_consumption=256\nopcache.interned_strings_buffer=16\nopcache.fast_shutdown=1\n"
+    notifies :restart, resources(:service => "apache2")
+end
+
+
+
+include_recipe "#{cookbook_name}::install_code"
 
 package "sendmail"
 

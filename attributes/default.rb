@@ -92,6 +92,17 @@ default['elevator']['config']['oAuthSecret'] = ""
 default['elevator']['config']['oAuthApplication'] = ""
 default['elevator']['config']['oAuthDomain'] = ""
 
+default['elevator']['config']['oAuthDelegate']['type'] = ""
+default['elevator']['config']['oAuthDelegate']['project_id'] = ""
+default['elevator']['config']['oAuthDelegate']['private_key_id'] = ""
+default['elevator']['config']['oAuthDelegate']['private_key'] = ""
+default['elevator']['config']['oAuthDelegate']['client_email'] = ""
+default['elevator']['config']['oAuthDelegate']['client_id'] = ""
+default['elevator']['config']['oAuthDelegate']['auth_uri'] = ""
+default['elevator']['config']['oAuthDelegate']['token_uri'] = ""
+default['elevator']['config']['oAuthDelegate']['auth_provider_x509_cert_url'] = ""
+default['elevator']['config']['oAuthDelegate']['client_x509_cert_url'] = ""
+
 default['elevator']['config']['labels']['remoteLogin'] = "University"
 default['elevator']['config']['labels']['guestLogin'] = "Guest"
 

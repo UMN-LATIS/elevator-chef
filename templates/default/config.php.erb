@@ -468,6 +468,17 @@ $config['oAuthSecret'] = '<%= node['elevator']['config']['oAuthSecret'] %>';
 $config['oAuthApplication'] = '<%= node['elevator']['config']['oAuthApplication'] %>';
 $config['oAuthDomain'] = '<%= node['elevator']['config']['oAuthDomain'] %>';
 
+$config['oAuthDelegate']['type'] = '<%= node['elevator']['config']['oAuthDelegate']['type'] %>';
+$config['oAuthDelegate']['project_id'] = '<%= node['elevator']['config']['oAuthDelegate']['project_id'] %>';
+$config['oAuthDelegate']['private_key_id'] = '<%= node['elevator']['config']['oAuthDelegate']['private_key_id'] %>';
+$config['oAuthDelegate']['private_key'] = '<%= node['elevator']['config']['oAuthDelegate']['private_key'] %>';
+$config['oAuthDelegate']['client_email'] = '<%= node['elevator']['config']['oAuthDelegate']['client_email'] %>';
+$config['oAuthDelegate']['client_id'] = '<%= node['elevator']['config']['oAuthDelegate']['client_id'] %>';
+$config['oAuthDelegate']['auth_uri'] = '<%= node['elevator']['config']['oAuthDelegate']['auth_uri'] %>';
+$config['oAuthDelegate']['token_uri'] = '<%= node['elevator']['config']['oAuthDelegate']['token_uri'] %>';
+$config['oAuthDelegate']['auth_provider_x509_cert_url'] = '<%= node['elevator']['config']['oAuthDelegate']['auth_provider_x509_cert_url'] %>';
+$config['oAuthDelegate']['client_x509_cert_url'] = '<%= node['elevator']['config']['oAuthDelegate']['client_x509_cert_url'] %>';
+
 $config['remoteLoginLabel'] = '<%= node['elevator']['config']['labels']['remoteLogin'] %>';
 $config['guestLoginLabel'] = '<%= node['elevator']['config']['labels']['guestLogin'] %>';
 

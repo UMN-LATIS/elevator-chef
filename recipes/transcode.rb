@@ -29,6 +29,12 @@ apt_repository "dhor_myway" do
 	distribution node['lsb']['codename']
 end
 
+# We need a PPA for some of this software
+apt_repository "coolwanglu_pdf2htmlex" do
+  uri "ppa:coolwanglu/pdf2htmlex"
+  distribution node['lsb']['codename']
+end
+
 
 ####
 # OpenJPEG on Ubuntu 14.04 is broken - doesn't support mixed res color components which breaks vips.
@@ -107,6 +113,7 @@ template "xvfb" do
 end
 
 include_recipe "elevator::nxsbuild"
+include_recipe "elevator::rtibuild"
 
 include_recipe "bluepill"
 
