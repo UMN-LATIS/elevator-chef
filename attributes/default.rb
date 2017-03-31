@@ -1,6 +1,9 @@
 default['elevator']['git']['repository'] = 'https://github.com/cmcfadden/elevator.git'
 default['elevator']['git']['ref'] = 'master'
 
+default['elevator']['imagemagick']['path'] = 'https://www.imagemagick.org/download/ImageMagick-7.0.5-4.tar.gz'
+default['elevator']['imagemagick']['version'] = '7.0.5-4'
+
 default['elevator']['install_directory'] = '/opt/elevator'
 
 default['elevator']['user'] = 'elevator'
