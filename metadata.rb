@@ -4,7 +4,7 @@ maintainer_email 'buysse@umn.edu'
 license          'All rights reserved'
 description      'Installs/Configures --test-kitchen'
 long_description 'Installs/Configures --test-kitchen'
-version          '0.8.0'
+version          '0.8.1'
 
 supports "ubuntu", "14.04"
 
