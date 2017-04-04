@@ -14,7 +14,7 @@ include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::users"
 include_recipe "#{cookbook_name}::install_code"
 include_recipe "#{cookbook_name}::configure_code"
-include_recipe "#{cookbook_name}::imagemagick"
+#include_recipe "#{cookbook_name}::imagemagick"
 
 include_recipe "chef-msttcorefonts"
 
