@@ -13,6 +13,7 @@ execute 'imagemagick_builddep' do
   command 'apt-get build-dep imagemagick'
 end
 
+package "libgs-dev"
 package "imagemagick"
 package "pkg-config"
 
@@ -29,7 +30,7 @@ bash "install_imagemagick" do
   cwd "/tmp"
   code <<-EOH
     tar -zxf ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.gz
-    (cd ImageMagick-#{node['elevator']['imagemagick']['version']}/ && ./configure && make && make install)
+    (cd ImageMagick-#{node['elevator']['imagemagick']['version']}/ && ./configure  --with-gslib=yes && make && make install)
     sudo ldconfig /usr/local/lib/
     echo "/usr/local/" | pecl install imagick
   EOH
