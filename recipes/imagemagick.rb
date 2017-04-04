@@ -9,6 +9,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
+execute 'imagemagick_builddep' do
+  command 'apt-get build-dep imagemagick'
+end
 package "imagemagick"
 
 include_recipe "tar"
