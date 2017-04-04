@@ -23,7 +23,7 @@ include_recipe "apache2::mod_ssl"
 include_recipe "apache2::mod_deflate"
 include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_headers"
-include_recipe "apache2::mod_php5"
+include_recipe "apache2::mod_php"
 include_recipe "cookbook-shibboleth::sp"
 
 
