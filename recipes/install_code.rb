@@ -2,13 +2,16 @@ include_recipe "#{cookbook_name}::git_setup"
 
 # install PHP
 include_recipe "php"
-package "php5-pgsql"
-package "php5-curl"
-package "php5-ldap"
-package "php5-apcu"
-package "php5-mongo"
-package "php5-imagick"
-package "php5-redis"
+package "php7.0-pgsql"
+package "php7.0-curl"
+package "php7.0-ldap"
+package "php-apcu"
+package "php-mongo"
+package "php-imagick"
+package "php7.0-dev"
+package "php-redis"
+
+package "git-flow"
 
 node.set['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
 

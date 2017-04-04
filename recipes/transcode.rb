@@ -80,14 +80,14 @@ package "meshlab" # might need to come from a different PPA
 package "gifsicle"
 package "gnuplot"
 package "libvips42"
-package "Xvfb"
+package "xvfb"
 package "libvips-tools"
 package "openslide-tools"
 package "libreoffice"
 package "libreoffice-script-provider-python"
 package "unoconv"
 package "ghostscript"
-package "libpoppler46"
+package "libpoppler58"
 package "poppler-utils"
 package "tesseract-ocr"
 
@@ -141,10 +141,6 @@ end
 
 template '/etc/bluepill/elevatorTranscode.pill' do
   source 'bluepill.transcode.erb'
-end
-
-template '/etc/ImageMagick/policy.xml' do
-  source 'imagemagick.erb'
 end
 
 

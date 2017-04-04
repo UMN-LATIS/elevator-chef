@@ -27,7 +27,16 @@ include_recipe "apache2::mod_php"
 include_recipe "cookbook-shibboleth::sp"
 
 
-file "/etc/php5/apache2/conf.d/50-tune-opcache.ini" do
+# apache recipe currently misses this file
+file "/etc/apache2/mods-available/php7.conf" do
+  owner 'root'
+  group 'root'
+  mode 0755
+  content ::File.open("/etc/apache2/mods-available/php.conf").read
+  action :create
+end
+
+file "/etc/php/7.0/apache2/conf.d/50-tune-opcache.ini" do
     owner "root"
     group "root"
     mode "0755"
