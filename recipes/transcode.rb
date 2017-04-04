@@ -72,6 +72,7 @@ dpkg_package "libtiff4" do
   action :install
 end
 
+package "imagemagick"
 package "ffmpeg"  # TODO: might not include qtfaststart
 package "yamdi"
 package "blender"
