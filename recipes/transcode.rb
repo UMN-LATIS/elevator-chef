@@ -19,15 +19,15 @@ include_recipe "#{cookbook_name}::imagemagick"
 include_recipe "chef-msttcorefonts"
 
 # We need a PPA for some of this software
-apt_repository "mc3man_trusty-media" do
-	uri "ppa:mc3man/trusty-media"
-	distribution node['lsb']['codename']
+apt_repository "jonathonf_ffmpeg_3" do
+  uri "ppa:jonathonf/ffmpeg-3"
+  distribution node['lsb']['codename']
 end
 
 # We need a PPA for some of this software
 apt_repository "dhor_myway" do
-	uri "ppa:dhor/myway"
-	distribution node['lsb']['codename']
+  uri "ppa:dhor/myway"
+  distribution node['lsb']['codename']
 end
 
 # We need a PPA for some of this software

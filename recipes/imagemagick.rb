@@ -10,16 +10,18 @@
 #
 
 execute 'imagemagick_builddep' do
-  command 'apt-get build-dep imagemagick'
+  command 'apt-get -y build-dep imagemagick'
 end
 
 package "libgs-dev"
 package "imagemagick"
 package "pkg-config"
+# package "libmagickwand-dev"
+package "xz-utils"
 
 include_recipe "tar"
 
-remote_file "/tmp/ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.gz" do
+remote_file "/tmp/ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.xz" do
   source node['elevator']['imagemagick']['path']
   notifies :run, "bash[install_imagemagick]", :immediately
 end
@@ -29,7 +31,7 @@ bash "install_imagemagick" do
   user "root"
   cwd "/tmp"
   code <<-EOH
-    tar -zxf ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.gz
+    tar -xf ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.xz
     (cd ImageMagick-#{node['elevator']['imagemagick']['version']}/ && ./configure  --with-gslib=yes && make && make install)
     sudo ldconfig /usr/local/lib/
     echo "/usr/local/" | pecl install imagick

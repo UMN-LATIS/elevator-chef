@@ -1,8 +1,8 @@
 default['elevator']['git']['repository'] = 'https://github.com/cmcfadden/elevator.git'
 default['elevator']['git']['ref'] = 'master'
 
-default['elevator']['imagemagick']['path'] = 'https://www.imagemagick.org/download/ImageMagick-7.0.5-4.tar.gz'
-default['elevator']['imagemagick']['version'] = '7.0.5-4'
+default['elevator']['imagemagick']['path'] = 'https://www.imagemagick.org/download/releases/ImageMagick-7.0.5-10.tar.xz'
+default['elevator']['imagemagick']['version'] = '7.0.5-10'
 
 default['elevator']['install_directory'] = '/opt/elevator'
 
@@ -22,7 +22,7 @@ default['elevator']['db']['dbprefix'] = ''
 default['elevator']['elasticsearch']['hostname'] = 'localhost'
 default['elevator']['elasticsearch']['port'] = '9200'
 default['elevator']['elasticsearch']['index'] = 'elevator'
-default['elevator']['elasticsearch']['version'] = '1.7.3'
+default['elevator']['elasticsearch']['version'] = '5.4.0'
 
 default['elevator']['redis']['hostname'] = 'localhost'
 default['elevator']['redis']['port'] = '6379'

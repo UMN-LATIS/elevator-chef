@@ -32,7 +32,7 @@ file "/etc/apache2/mods-available/php7.conf" do
   owner 'root'
   group 'root'
   mode 0755
-  content ::File.open("/etc/apache2/mods-available/php.conf").read
+  content lazy { ::File.open("/etc/apache2/mods-available/php.conf").read }
   action :create
 end
 
@@ -57,21 +57,21 @@ apache_site "000-default" do
 end
 
 service "apache2" do
-	ignore_failure true
-	action :start
+  ignore_failure true
+  action :start
 end
 
 web_app "elevator" do
-	source "web_app.erb"
-	cookbook "elevator"
-	use_ssl false
-	vhost_address '*'
-	server_name node['elevator']['config']['web_hostname']
-	docroot node['elevator']['install_directory']
-	directory_index ["index.php", "index.html"]
-	allow_override "all"
-	log_level 'info'
-	enable true
+  source "web_app.erb"
+  cookbook "elevator"
+  use_ssl false
+  vhost_address '*'
+  server_name node['elevator']['config']['web_hostname']
+  docroot node['elevator']['install_directory']
+  directory_index ["index.php", "index.html"]
+  allow_override "all"
+  log_level 'info'
+  enable true
 end
 
 databag = data_bag_item("elevator", "ssl")
@@ -104,19 +104,19 @@ end
 
 
 web_app "elevator_ssl" do
-	source "web_app.erb"
-	cookbook "elevator"
-	use_ssl true
-	vhost_address '*'
-	server_name node['elevator']['config']['web_hostname']
-	docroot node['elevator']['install_directory']
-	directory_index ["index.php", "index.html"]
-	allow_override "all"
-	log_level 'info'
-	ssl_intermediate_cert intermediatePath
-	ssl_cert certPath
-	ssl_key keyPath
-	enable true
+  source "web_app.erb"
+  cookbook "elevator"
+  use_ssl true
+  vhost_address '*'
+  server_name node['elevator']['config']['web_hostname']
+  docroot node['elevator']['install_directory']
+  directory_index ["index.php", "index.html"]
+  allow_override "all"
+  log_level 'info'
+  ssl_intermediate_cert intermediatePath
+  ssl_cert certPath
+  ssl_key keyPath
+  enable true
 end
 
 
