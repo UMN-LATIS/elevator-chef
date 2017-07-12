@@ -15,6 +15,7 @@ include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::users"
 
 
+
 # Install apache web server
 node.set['apache']['mpm'] = 'prefork'
 

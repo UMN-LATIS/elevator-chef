@@ -14,6 +14,7 @@ package "php7.0-dev"
 package "php-redis"
 package "zip"
 package "unzip"
+package "php7.0-zip"
 
 package "git-flow"
 

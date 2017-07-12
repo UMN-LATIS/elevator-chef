@@ -1,4 +1,17 @@
 
+user 'ubuntu' do
+  comment 'A random user'
+  home '/home/random'
+  shell '/bin/bash'
+  password '$1$JJsvHslasdfjVEroftprNn4JHtDi'
+  not_if "getent passwd ubuntu"
+end
+
+
+
+
+
+
 group node['elevator']['group']
 
 user node['elevator']['user'] do

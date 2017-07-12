@@ -36,7 +36,9 @@ bash "install_imagemagick" do
     sudo ldconfig /usr/local/lib/
     echo "/usr/local/" | pecl install imagick
   EOH
-  notifies :restart, resources(:service => "apache2")
+  if File.exist?("/etc/init.d/apache2")
+    notifies :restart, resources(:service => "apache2")
+  end
   notifies :reload, "bluepill_service[elevatorTranscode]", :delayed
   action :nothing
 end
