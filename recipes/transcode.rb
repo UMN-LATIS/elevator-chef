@@ -31,10 +31,10 @@ apt_repository "dhor_myway" do
 end
 
 # We need a PPA for some of this software
-apt_repository "coolwanglu_pdf2htmlex" do
-  uri "ppa:coolwanglu/pdf2htmlex"
-  distribution node['lsb']['codename']
-end
+# apt_repository "coolwanglu_pdf2htmlex" do
+#   uri "ppa:coolwanglu/pdf2htmlex"
+#   distribution node['lsb']['codename']
+# end
 
 
 ####

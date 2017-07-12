@@ -34,13 +34,16 @@ bash "install_imagemagick" do
     tar -xf ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.xz
     (cd ImageMagick-#{node['elevator']['imagemagick']['version']}/ && ./configure  --with-gslib=yes && make && make install)
     sudo ldconfig /usr/local/lib/
-    echo "/usr/local/" | pecl install imagick
   EOH
+  action :nothing
+end
+
+php_pear 'imagick' do
+  action :install
   if File.exist?("/etc/init.d/apache2")
     notifies :restart, resources(:service => "apache2")
   end
   notifies :reload, "bluepill_service[elevatorTranscode]", :delayed
-  action :nothing
 end
 
 template '/usr/local/etc/ImageMagick-7/policy.xml' do
