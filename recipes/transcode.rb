@@ -18,13 +18,13 @@ include_recipe "#{cookbook_name}::imagemagick"
 
 include_recipe "chef-msttcorefonts"
 
-# We need a PPA for some of this software
+# provides FFMPEG
 apt_repository "jonathonf_ffmpeg_3" do
   uri "ppa:jonathonf/ffmpeg-3"
   distribution node['lsb']['codename']
 end
 
-# We need a PPA for some of this software
+# Provides VIPS
 apt_repository "dhor_myway" do
   uri "ppa:dhor/myway"
   distribution node['lsb']['codename']

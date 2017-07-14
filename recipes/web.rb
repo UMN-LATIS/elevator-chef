@@ -35,7 +35,14 @@ file "/etc/apache2/mods-available/php7.conf" do
   mode 0755
   content lazy { ::File.open("/etc/apache2/mods-available/php.conf").read }
   action :create
+  notifies :run, "execute[toggle_php7_mod]", :immediately
 end
+
+execute 'toggle_php7_mod' do
+  command 'a2dismod php7; a2enmod php7'
+  action :nothing
+end
+
 
 file "/etc/php/7.0/apache2/conf.d/50-tune-opcache.ini" do
     owner "root"

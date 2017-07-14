@@ -9,7 +9,7 @@ package "php7.0-curl"
 package "php7.0-ldap"
 package "php-apcu"
 package "php-mongodb"
-package "php-imagick"
+# package "php-imagick"
 package "php7.0-dev"
 package "php-redis"
 package "zip"
@@ -18,6 +18,9 @@ package "php7.0-zip"
 
 package "git-flow"
 
+package "php-igbinary" do
+	action :remove
+end
 
 node.set['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
 

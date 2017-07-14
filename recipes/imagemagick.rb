@@ -9,41 +9,51 @@
 # All rights reserved - Do Not Redistribute
 #
 
-execute 'imagemagick_builddep' do
-  command 'apt-get -y build-dep imagemagick'
-end
 
 package "libgs-dev"
-package "imagemagick"
+# package "imagemagick"
 package "pkg-config"
 # package "libmagickwand-dev"
 package "xz-utils"
 
 include_recipe "tar"
 
-remote_file "/tmp/ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.xz" do
-  source node['elevator']['imagemagick']['path']
-  notifies :run, "bash[install_imagemagick]", :immediately
+execute 'imagemagick_builddep' do
+  command 'apt-get -y build-dep imagemagick'
 end
 
-bash "install_imagemagick" do
-  not_if "/usr/local/bin/identify --version | grep -q '#{node['elevator']['imagemagick']['version']}'"
+cookbook_file '/tmp/imagemagick-7.0.5_10-1_amd64.deb' do
+  source 'imagemagick-7.0.5_10-1_amd64.deb'
+  action :create
+end
+
+dpkg_package "install_imagick" do
+  source "/tmp/imagemagick-7.0.5_10-1_amd64.deb"
+  action :install
+  notifies :run, "bash[imagick_pecl]", :immediately
+end
+
+
+# not needed on AWS
+# execute "hack-debs" do
+#   command "sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list && apt-get update"
+#   notifies :run, "execute[imagemagick_builddep]", :immediately
+#   action :nothing
+# end
+
+
+
+
+bash "imagick_pecl" do
   user "root"
   cwd "/tmp"
   code <<-EOH
-    tar -xf ImageMagick-#{node['elevator']['imagemagick']['version']}.tar.xz
-    (cd ImageMagick-#{node['elevator']['imagemagick']['version']}/ && ./configure  --with-gslib=yes && make && make install)
     sudo ldconfig /usr/local/lib/
+    echo "/usr/local/" | pecl install imagick
+    echo "extension=imagick.so" > /etc/php/7.0/mods-available/imagick.ini
+    phpenmod imagick
   EOH
   action :nothing
-end
-
-php_pear 'imagick' do
-  action :install
-  if File.exist?("/etc/init.d/apache2")
-    notifies :restart, resources(:service => "apache2")
-  end
-  notifies :reload, "bluepill_service[elevatorTranscode]", :delayed
 end
 
 template '/usr/local/etc/ImageMagick-7/policy.xml' do
