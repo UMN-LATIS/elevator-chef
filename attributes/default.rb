@@ -22,7 +22,7 @@ default['elevator']['db']['dbprefix'] = ''
 default['elevator']['elasticsearch']['hostname'] = 'localhost'
 default['elevator']['elasticsearch']['port'] = '9200'
 default['elevator']['elasticsearch']['index'] = 'elevator'
-default['elevator']['elasticsearch']['version'] = '5.4.0'
+default['elevator']['elasticsearch']['version'] = '5.5.0'
 
 default['elevator']['redis']['hostname'] = 'localhost'
 default['elevator']['redis']['port'] = '6379'
@@ -83,6 +83,9 @@ default['elevator']['deploy_environment'] = "development"
 
 default['elevator']['config']['shibboleth']['login'] = "";
 default['elevator']['config']['shibboleth']['logout'] = "";
+
+default['elevator']['config']['shibboleth']['enableShibboleth'] = "false";
+default['elevator']['config']['shibboleth']['shibbolethPath'] = "";
 
 # LDAP configuration.
 default['elevator']['config']['ldap']['username'] = ""

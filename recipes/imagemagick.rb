@@ -22,13 +22,13 @@ execute 'imagemagick_builddep' do
   command 'apt-get -y build-dep imagemagick'
 end
 
-cookbook_file '/tmp/imagemagick-7.0.6_0-1_amd64.deb' do
-  source 'imagemagick-7.0.6_0-1_amd64.deb'
+cookbook_file '/tmp/imagemagick-7.0.6_1-1_amd64.deb' do
+  source 'imagemagick-7.0.6_1-1_amd64.deb'
   action :create
 end
 
 dpkg_package "install_imagick" do
-  source "/tmp/imagemagick-7.0.6_0-1_amd64.deb"
+  source "/tmp/imagemagick-7.0.6_1-1_amd64.deb"
   action :install
   notifies :run, "bash[imagick_pecl]", :immediately
 end

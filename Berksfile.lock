@@ -70,7 +70,7 @@ GRAPH
   database (6.1.1)
     postgresql (>= 1.0.0)
   dmg (3.1.0)
-  elasticsearch (3.2.0)
+  elasticsearch (3.2.1)
     apt (>= 0.0.0)
     ark (>= 0.0.0)
     chef-sugar (>= 0.0.0)

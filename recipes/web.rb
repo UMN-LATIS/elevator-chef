@@ -28,6 +28,48 @@ include_recipe "apache2::mod_php"
 include_recipe "cookbook-shibboleth::sp"
 
 
+template '/etc/shibboleth/shibboleth2.xml' do
+  source node['elevator']['config']['shibboleth']['shibbolethPath'] + '/shibboleth2.xml.erb'
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+template '/etc/shibboleth/attribute-map.xml' do
+  source node['elevator']['config']['shibboleth']['shibbolethPath'] + '/attribute-map.xml.erb'
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+template '/etc/shibboleth/attribute-policy.xml' do
+  source node['elevator']['config']['shibboleth']['shibbolethPath'] + '/attribute-policy.xml.erb'
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+databag_shib = data_bag_item("elevator", "shibboleth")
+
+certPath = "/etc/shibboleth/sp-cert.pem"
+keyPath =  "/etc/shibboleth/sp-key.pem"
+
+file certPath do
+  content databag_shib[node.chef_environment]["certificate"]
+  owner "root"
+  group "root"
+  mode 0600
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+file keyPath do
+  content databag_shib[node.chef_environment]["key"]
+  owner "root"
+  group "root"
+  mode 0600
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+  notifies :restart, "service[shibd]", :immediately
+end
+
+service 'shibd' do
+  action :nothing
+end
+
+
 # apache recipe currently misses this file
 file "/etc/apache2/mods-available/php7.conf" do
   owner 'root'

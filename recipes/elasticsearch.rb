@@ -17,10 +17,11 @@ include_recipe "elasticsearch"
 #include_recipe "elasticsearch::aws"
 
 elasticsearch_configure 'elasticsearch' do
-    allocated_memory '512m'
+    allocated_memory '1975m'
     configuration ({
       'http.cors.enabled' => true,
       'http.cors.allow-origin' => '*',
+      'network.host' => '0.0.0.0'
     })
 end
 
