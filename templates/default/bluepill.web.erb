@@ -28,7 +28,7 @@ Bluepill.application("elevatorWeb") do |app|
     end
   end
 
-  2.times do |i|
+  6.times do |i|
     app.process("rebuildCache-#{i}") do |process|
       process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive rebuildCache"
       process.group = "dcl"

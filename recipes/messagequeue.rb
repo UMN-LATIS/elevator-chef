@@ -25,6 +25,7 @@ include_recipe "python"
 
 python_pip "boto"
 python_pip "beanstalkc"
+python_pip "pyyaml"
 
 remote_file "/usr/local/bin/beanstalkd_cloudwatch" do
   source "https://raw.githubusercontent.com/erans/beanstalkdcloudwatch/master/beanstalkd_cloudwatch.py"
