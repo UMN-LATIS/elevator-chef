@@ -15,15 +15,17 @@ include_recipe "#{cookbook_name}::users"
 
 node.set['beanstalkd']['start_during_boot'] = true
 node.set['beanstalkd']['opts'] = {
-	"l" => node['network']['ipaddress'] || "0.0.0.0",
-	"b" => "/var/lib/beanstalkd"
+  "b" => "/var/lib/beanstalkd"
 }
+node.set['beanstalkd']['listen_addr'] = node['network']['ipaddress'] || "0.0.0.0"
+node.set['beanstalkd']['listen_port'] = 11300
 
 include_recipe "beanstalkd"
 include_recipe "python"
 
 python_pip "boto"
 python_pip "beanstalkc"
+python_pip "pyyaml"
 
 remote_file "/usr/local/bin/beanstalkd_cloudwatch" do
   source "https://raw.githubusercontent.com/erans/beanstalkdcloudwatch/master/beanstalkd_cloudwatch.py"

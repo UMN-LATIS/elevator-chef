@@ -14,27 +14,27 @@ include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::users"
 include_recipe "#{cookbook_name}::install_code"
 include_recipe "#{cookbook_name}::configure_code"
-#include_recipe "#{cookbook_name}::imagemagick"
+include_recipe "#{cookbook_name}::imagemagick"
 
 include_recipe "chef-msttcorefonts"
 
-# We need a PPA for some of this software
-apt_repository "mc3man_trusty-media" do
-	uri "ppa:mc3man/trusty-media"
-	distribution node['lsb']['codename']
-end
-
-# We need a PPA for some of this software
-apt_repository "dhor_myway" do
-	uri "ppa:dhor/myway"
-	distribution node['lsb']['codename']
-end
-
-# We need a PPA for some of this software
-apt_repository "coolwanglu_pdf2htmlex" do
-  uri "ppa:coolwanglu/pdf2htmlex"
+# provides FFMPEG
+apt_repository "jonathonf_ffmpeg_3" do
+  uri "ppa:jonathonf/ffmpeg-3"
   distribution node['lsb']['codename']
 end
+
+# Provides VIPS
+apt_repository "dhor_myway" do
+  uri "ppa:dhor/myway"
+  distribution node['lsb']['codename']
+end
+
+# We need a PPA for some of this software
+# apt_repository "coolwanglu_pdf2htmlex" do
+#   uri "ppa:coolwanglu/pdf2htmlex"
+#   distribution node['lsb']['codename']
+# end
 
 
 ####
@@ -72,7 +72,7 @@ dpkg_package "libtiff4" do
   action :install
 end
 
-package "imagemagick"
+# package "imagemagick"
 package "ffmpeg"  # TODO: might not include qtfaststart
 package "yamdi"
 package "blender"
@@ -80,16 +80,17 @@ package "meshlab" # might need to come from a different PPA
 package "gifsicle"
 package "gnuplot"
 package "libvips42"
-package "Xvfb"
+package "xvfb"
 package "libvips-tools"
 package "openslide-tools"
 package "libreoffice"
 package "libreoffice-script-provider-python"
 package "unoconv"
 package "ghostscript"
-package "libpoppler46"
+package "libpoppler58"
 package "poppler-utils"
 package "tesseract-ocr"
+
 
 node.default["r"]["install_method"] = "package"
 node.default["r"]["cran_mirror"] = "http://cran.rstudio.com/"
@@ -141,10 +142,6 @@ end
 
 template '/etc/bluepill/elevatorTranscode.pill' do
   source 'bluepill.transcode.erb'
-end
-
-template '/etc/ImageMagick/policy.xml' do
-  source 'imagemagick.erb'
 end
 
 

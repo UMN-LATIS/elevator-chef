@@ -15,6 +15,7 @@ include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::users"
 
 
+
 # Install apache web server
 node.set['apache']['mpm'] = 'prefork'
 
@@ -23,11 +24,69 @@ include_recipe "apache2::mod_ssl"
 include_recipe "apache2::mod_deflate"
 include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_headers"
-include_recipe "apache2::mod_php5"
+include_recipe "apache2::mod_php"
 include_recipe "cookbook-shibboleth::sp"
 
 
-file "/etc/php5/apache2/conf.d/50-tune-opcache.ini" do
+template '/etc/shibboleth/shibboleth2.xml' do
+  source node['elevator']['config']['shibboleth']['shibbolethPath'] + '/shibboleth2.xml.erb'
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+template '/etc/shibboleth/attribute-map.xml' do
+  source node['elevator']['config']['shibboleth']['shibbolethPath'] + '/attribute-map.xml.erb'
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+template '/etc/shibboleth/attribute-policy.xml' do
+  source node['elevator']['config']['shibboleth']['shibbolethPath'] + '/attribute-policy.xml.erb'
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+databag_shib = data_bag_item("elevator", "shibboleth")
+
+certPath = "/etc/shibboleth/sp-cert.pem"
+keyPath =  "/etc/shibboleth/sp-key.pem"
+
+file certPath do
+  content databag_shib[node.chef_environment]["certificate"]
+  owner "root"
+  group "root"
+  mode 0600
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+end
+
+file keyPath do
+  content databag_shib[node.chef_environment]["key"]
+  owner "root"
+  group "root"
+  mode 0600
+  only_if node['elevator']['config']['shibboleth']['enableShibboleth']
+  notifies :restart, "service[shibd]", :immediately
+end
+
+service 'shibd' do
+  action :nothing
+end
+
+
+# apache recipe currently misses this file
+file "/etc/apache2/mods-available/php7.conf" do
+  owner 'root'
+  group 'root'
+  mode 0755
+  content lazy { ::File.open("/etc/apache2/mods-available/php.conf").read }
+  action :create
+  notifies :run, "execute[toggle_php7_mod]", :immediately
+end
+
+execute 'toggle_php7_mod' do
+  command 'a2dismod php7; a2enmod php7'
+  action :nothing
+end
+
+
+file "/etc/php/7.0/apache2/conf.d/50-tune-opcache.ini" do
     owner "root"
     group "root"
     mode "0755"
@@ -48,21 +107,21 @@ apache_site "000-default" do
 end
 
 service "apache2" do
-	ignore_failure true
-	action :start
+  ignore_failure true
+  action :start
 end
 
 web_app "elevator" do
-	source "web_app.erb"
-	cookbook "elevator"
-	use_ssl false
-	vhost_address '*'
-	server_name node['elevator']['config']['web_hostname']
-	docroot node['elevator']['install_directory']
-	directory_index ["index.php", "index.html"]
-	allow_override "all"
-	log_level 'info'
-	enable true
+  source "web_app.erb"
+  cookbook "elevator"
+  use_ssl false
+  vhost_address '*'
+  server_name node['elevator']['config']['web_hostname']
+  docroot node['elevator']['install_directory']
+  directory_index ["index.php", "index.html"]
+  allow_override "all"
+  log_level 'info'
+  enable true
 end
 
 databag = data_bag_item("elevator", "ssl")
@@ -95,19 +154,19 @@ end
 
 
 web_app "elevator_ssl" do
-	source "web_app.erb"
-	cookbook "elevator"
-	use_ssl true
-	vhost_address '*'
-	server_name node['elevator']['config']['web_hostname']
-	docroot node['elevator']['install_directory']
-	directory_index ["index.php", "index.html"]
-	allow_override "all"
-	log_level 'info'
-	ssl_intermediate_cert intermediatePath
-	ssl_cert certPath
-	ssl_key keyPath
-	enable true
+  source "web_app.erb"
+  cookbook "elevator"
+  use_ssl true
+  vhost_address '*'
+  server_name node['elevator']['config']['web_hostname']
+  docroot node['elevator']['install_directory']
+  directory_index ["index.php", "index.html"]
+  allow_override "all"
+  log_level 'info'
+  ssl_intermediate_cert intermediatePath
+  ssl_cert certPath
+  ssl_key keyPath
+  enable true
 end
 
 

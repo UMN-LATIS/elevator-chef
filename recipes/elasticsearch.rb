@@ -3,7 +3,7 @@ include_recipe "#{cookbook_name}::install_code"
 include_recipe "#{cookbook_name}::configure_code"
 
 node.set['java']['install_flavor'] = 'oracle'
-node.set['java']['jdk_version'] = '7'
+node.set['java']['jdk_version'] = '8'
 node.set['java']['oracle']['accept_oracle_download_terms'] = true
 
 
@@ -16,11 +16,20 @@ node.set['elasticsearch']['version'] = node['elevator']['elasticsearch']['versio
 include_recipe "elasticsearch"
 #include_recipe "elasticsearch::aws"
 
-unless FileTest.exists?("/usr/local/elasticsearch/plugins/head/")
-	bash "elasticHead" do
-		code "cd /usr/local/elasticsearch; ./bin/plugin -install mobz/elasticsearch-head"
-	end
+elasticsearch_configure 'elasticsearch' do
+    allocated_memory '1975m'
+    configuration ({
+      'http.cors.enabled' => true,
+      'http.cors.allow-origin' => '*',
+      'network.host' => '0.0.0.0'
+    })
 end
+
+# unless FileTest.exists?("/usr/local/elasticsearch/plugins/head/")
+# 	bash "elasticHead" do
+# 		code "cd /usr/local/elasticsearch; ./bin/plugin -install mobz/elasticsearch-head"
+# 	end
+# end
 
 # service 'elasticsearch' do
 #   action [:enable, :start]
