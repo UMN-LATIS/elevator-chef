@@ -1,4 +1,4 @@
->>#
+#
 # Cookbook Name:: elevator
 # Recipe:: imagemagick
 #
@@ -21,6 +21,8 @@ include_recipe "tar"
 execute 'imagemagick_builddep' do
   command 'apt-get -y build-dep imagemagick'
 end
+
+## built with checkinstall
 
 cookbook_file '/tmp/imagemagick-7.0.6_1-1_amd64.deb' do
   source 'imagemagick-7.0.6_1-1_amd64.deb'
