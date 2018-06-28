@@ -6,7 +6,7 @@ Bluepill.application("elevatorTranscode") do |app|
       process.group = "dcl"
       process.pid_file = "/tmp/processFiles-#{i}"
       process.stdout = process.stderr = "/tmp/processFiles-#{i}.log"
-      process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+      process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,10]
     end
   end
 
@@ -17,7 +17,7 @@ Bluepill.application("elevatorTranscode") do |app|
       process.daemonize = true
       process.pid_file = "/tmp/transcodeTask-#{i}"
       process.stdout = process.stderr = "/tmp/transcodeTask-#{i}.log"
-      process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
+      process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,10]
     end
   end
 end
