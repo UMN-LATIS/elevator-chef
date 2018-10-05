@@ -116,5 +116,6 @@ default['elevator']['config']['labels']['guestLogin'] = "Guest"
 
 
 default['elevator']['config']['jwplayer'] = ""
+default['elevator']['config']['googleapi'] = ""
 default['elevator']['config']['apiKey'] = ""
 default['elevator']['config']['apiSecret'] = ""
