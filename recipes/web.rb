@@ -169,6 +169,16 @@ web_app "elevator_ssl" do
   enable true
 end
 
+cron 'update_date_holds' do
+  action :create
+  minute '0'
+  hour '2'
+  weekday '*'
+  user 'root'
+  command %W{/usr/bin/php #{node['elevator']['install_directory']}/admin.php updateDateHolds}.join(' ')
+end
+
+
 
 include_recipe "#{cookbook_name}::configure_code"
 
