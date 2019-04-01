@@ -9,6 +9,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
+package "libimage-exiftool-perl"
 
 package "libgs-dev"
 # package "imagemagick"

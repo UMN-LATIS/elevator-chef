@@ -90,7 +90,7 @@ package "ghostscript"
 package "libpoppler58"
 package "poppler-utils"
 package "tesseract-ocr"
-
+package "gpac"
 
 node.default["r"]["install_method"] = "package"
 node.default["r"]["cran_mirror"] = "http://cran.rstudio.com/"
