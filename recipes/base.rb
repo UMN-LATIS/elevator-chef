@@ -8,6 +8,7 @@
 #
 
 ENV['GIT_SSL_NO_VERIFY'] = "1"
+node.override['apt']['compile_time_update'] = true
 
 
 #this seems hacky, but the apt include actually fails without it

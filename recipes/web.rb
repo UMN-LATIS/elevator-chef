@@ -124,33 +124,54 @@ web_app "elevator" do
   enable true
 end
 
-databag = data_bag_item("elevator", "ssl")
+
 
 certPath = "/etc/apache2/ssl/elevator.crt"
 keyPath =  "/etc/apache2/ssl/elevator.key"
 intermediatePath =  "/etc/apache2/ssl/intermediate.crt"
 
-file certPath do
-  content databag[node.chef_environment]["certificate"]
-  owner "root"
-  group "root"
-  mode 0600
+if node['elevator']["use_letsencrypt"] == false
+  databag = data_bag_item("elevator", "ssl")
+
+  file certPath do
+    content databag[node.chef_environment]["certificate"]
+    owner "root"
+    group "root"
+    mode 0600
+  end
+
+  file keyPath do
+    content databag[node.chef_environment]["key"]
+    owner "root"
+    group "root"
+    mode 0600
+  end
+
+  file intermediatePath do
+    content databag[node.chef_environment]["intermediate"]
+    owner "root"
+    group "root"
+    mode 0600
+  end
 end
 
-file keyPath do
-  content databag[node.chef_environment]["key"]
-  owner "root"
-  group "root"
-  mode 0600
-end
+TODODODODODO
+if node['elevator']["use_letsencrypt"] == true
 
-file intermediatePath do
-  content databag[node.chef_environment]["intermediate"]
-  owner "root"
-  group "root"
-  mode 0600
-end
+  include_recipe 'acme'
+  node.override['acme']['contact'] = ['mailto:mcfa0086@umn.edu']
+  node.override['acme']['endpoint'] = 'https://acme-v01.api.letsencrypt.org'
+  site = "dev.elevator.umn.edu"
 
+  acme_certificate "#{site}" do
+    crt               certPath
+    key               keyPath
+    chain             intermediatePath
+    wwwroot           "/opt/elevator/"
+    notifies :restart, "service[apache2]"
+    # alt_names sans
+  end
+end
 
 
 web_app "elevator_ssl" do
