@@ -17,7 +17,7 @@ include_recipe "#{cookbook_name}::users"
 
 
 # Install apache web server
-node.set['apache']['mpm'] = 'prefork'
+node.override['apache']['mpm'] = 'prefork'
 
 include_recipe "apache2"
 include_recipe "apache2::mod_ssl"
@@ -155,7 +155,7 @@ if node['elevator']["use_letsencrypt"] == false
   end
 end
 
-TODODODODODO
+# TODODODODODO
 if node['elevator']["use_letsencrypt"] == true
 
   include_recipe 'acme'

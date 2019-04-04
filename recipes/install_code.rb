@@ -18,11 +18,12 @@ package "php7.0-zip"
 
 package "git-flow"
 
+# why do we uninstall this?  Not sure.  Maybe has to do with redis?  Would have been nice if there were comments.
 package "php-igbinary" do
 	action :remove
 end
 
-node.set['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
+node.override['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
 
 # Before running composer, let's cache some well-known remote ssh keys.  Saves
 # against some ways it'll break (wanting to be interactive).

@@ -8,7 +8,7 @@ cookbook "cookbook-shibboleth",
   git: "git@github.umn.edu:mcfa0086/cookbook-shibboleth.git"
 
 cookbook "r",
-  git: "https://github.com/stevendanna/cookbook-r.git"
+  git: "https://github.com/thedataincubator/cookbook-r.git"
 
 cookbook "chef-msttcorefonts",
   git: "https://github.com/captnswing/chef-msttcorefonts.git", 

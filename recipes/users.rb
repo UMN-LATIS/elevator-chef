@@ -19,7 +19,7 @@ user node['elevator']['user'] do
 	home node['elevator']['userhome']
 	shell '/bin/bash'
 	system true
-	supports :manage_home => true
+  manage_home true
 	comment "Elevator user"
 end
 
