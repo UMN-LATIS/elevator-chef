@@ -128,10 +128,13 @@ git '/usr/local/bin/spatial-media' do
   action :sync
 end
 
+# workaround due to https://github.com/poise/poise-python/issues/140
+node.default['poise-python']['options']['pip_version'] = '18.0'
 
-include_recipe "python"
-python_pip "pillow"
-python_pip "pypdfocr"
+
+include_recipe "poise-python"
+python_package "pillow"
+python_package "pypdfocr"
 
 git '/usr/local/bin/imagepacker' do
   repository 'https://github.com/UMN-LATIS/imagepacker.git'

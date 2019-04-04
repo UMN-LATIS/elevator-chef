@@ -24,12 +24,12 @@ depends "composer"
 depends "beanstalkd"
 depends "ssh_known_hosts"
 depends "cookbook-shibboleth"
-depends "elasticsearch"
+depends "elasticsearch", "= 3.2.1"
 depends 'bluepill'
-depends "python"
 depends 'chef-client'
 depends 'tar'
 depends 'r'
 depends 'L7-redis', "=1.0.7"
 depends 'chef-msttcorefonts'
 depends 'zipfile'
+depends "poise-python"

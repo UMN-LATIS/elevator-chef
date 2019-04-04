@@ -21,11 +21,13 @@ node.set['beanstalkd']['listen_addr'] = node['network']['ipaddress'] || "0.0.0.0
 node.set['beanstalkd']['listen_port'] = 11300
 
 include_recipe "beanstalkd"
-include_recipe "python"
+# workaround due to https://github.com/poise/poise-python/issues/140
+node.default['poise-python']['options']['pip_version'] = '18.0'
+include_recipe "poise-python"
 
-python_pip "boto"
-python_pip "beanstalkc"
-python_pip "pyyaml"
+python_package "boto"
+python_package "beanstalkc"
+python_package "pyyaml"
 
 remote_file "/usr/local/bin/beanstalkd_cloudwatch" do
   source "https://raw.githubusercontent.com/erans/beanstalkdcloudwatch/master/beanstalkd_cloudwatch.py"
