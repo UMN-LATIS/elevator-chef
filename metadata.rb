@@ -10,7 +10,7 @@ supports "ubuntu", "16.04"
 
 depends 'iptables', "=2.0.0"
 
-depends "apt"
+depends "apt", "= 2.9.2"
 depends "apt-upgrade-once"
 depends "git"
 depends "ntp"
