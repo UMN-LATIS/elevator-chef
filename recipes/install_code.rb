@@ -113,22 +113,22 @@ end
 # 	# should have a guard
 # end
 
-# execute "update_application_models" do
-# 	cwd node['elevator']['install_directory']
-# 	command "php doctrine.php orm:generate-entities application/models"
-# 	notifies :run, "execute[update_application_proxies]", :immediately
-# 	action :nothing
-# end
+execute "update_application_models" do
+	cwd node['elevator']['install_directory']
+	command "php doctrine.php orm:generate-entities application/models"
+	notifies :run, "execute[update_application_proxies]", :immediately
+	action :nothing
+end
 
-# execute "update_application_proxies" do
-# 	cwd node['elevator']['install_directory']
-# 	command "php doctrine.php orm:generate-proxies application/models/Proxies"
-# 	notifies :run, "execute[update_proxies_perms]", :immediately
-# 	action :nothing
-# end
+execute "update_application_proxies" do
+	cwd node['elevator']['install_directory']
+	command "php doctrine.php orm:generate-proxies application/models/Proxies"
+	notifies :run, "execute[update_proxies_perms]", :immediately
+	action :nothing
+end
 
-# execute "update_proxies_perms" do
-# 	cwd node['elevator']['install_directory']
-# 	command "chmod 777 application/models/Proxies"
-# 	action :nothing
-# end
+execute "update_proxies_perms" do
+	cwd node['elevator']['install_directory']
+	command "chmod 777 application/models/Proxies"
+	action :nothing
+end
