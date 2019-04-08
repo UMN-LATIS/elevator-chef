@@ -26,7 +26,7 @@ depends "cookbook-shibboleth"
 depends "elasticsearch"
 depends 'bluepill'
 depends "python"
-depends 'chef-client'
+depends 'chef-client', "=4.3.2"
 depends 'tar'
 depends 'r'
 depends 'L7-redis', "=1.0.7"
