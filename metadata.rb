@@ -28,7 +28,7 @@ depends 'bluepill'
 depends "python"
 depends 'chef-client', "=4.3.2"
 depends 'tar'
-depends 'r'
+depends 'r', "= 0.3.0"
 depends 'L7-redis', "=1.0.7"
 depends 'chef-msttcorefonts'
 depends 'zipfile'
