@@ -16,7 +16,7 @@ depends "git"
 depends "ntp"
 depends "application", "= 3.0.0"
 depends "application_php", "=2.0.0"
-depends "php"
+depends "php", '= 3.0.0'
 depends "apache2"
 depends "database"
 depends "composer"
@@ -24,7 +24,7 @@ depends "beanstalkd"
 depends "ssh_known_hosts"
 depends "cookbook-shibboleth"
 depends "elasticsearch"
-depends 'bluepill'
+depends 'bluepill', '= 4.0.1'
 depends "python"
 depends 'chef-client', "=4.3.2"
 depends 'tar'
@@ -32,3 +32,6 @@ depends 'r', "= 0.3.0"
 depends 'L7-redis', "=1.0.7"
 depends 'chef-msttcorefonts'
 depends 'zipfile'
+
+# pin this version
+depends 'windows', '= 1.39.1'
