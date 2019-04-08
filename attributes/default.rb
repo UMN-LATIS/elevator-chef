@@ -2,6 +2,9 @@
 # bluepill reads this path wrong because it assumes gems go into the same dir as ruby
 default['bluepill']['bin'] = "/opt/chef/embedded/bin/bluepill"
 
+
+default['elevator']['upgrade_chef'] = false
+
 default['elevator']['git']['repository'] = 'https://github.com/cmcfadden/elevator.git'
 default['elevator']['git']['ref'] = 'master'
 

@@ -4,7 +4,7 @@ maintainer_email 'buysse@umn.edu'
 license          'All rights reserved'
 description      'Installs/Configures --test-kitchen'
 long_description 'Installs/Configures --test-kitchen'
-version          '1.0.3'
+version          '1.0.4'
 
 supports "ubuntu", "16.04"
 
@@ -33,3 +33,4 @@ depends 'L7-redis', "=1.0.7"
 depends 'chef-msttcorefonts'
 depends 'zipfile'
 depends "poise-python"
+depends "chef_client_updater", "~> 3.5.2"
