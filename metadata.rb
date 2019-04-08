@@ -14,8 +14,6 @@ depends "apt"
 depends "apt-upgrade-once"
 depends "git"
 depends "ntp"
-depends "application", "= 3.0.0"
-depends "application_php", "=2.0.0"
 depends "php"
 depends "apache2"
 depends "acme", "4.0.0"
@@ -28,7 +26,7 @@ depends "elasticsearch", "= 3.2.1"
 depends 'bluepill'
 depends 'chef-client', "= 11.1.2"
 depends 'tar'
-depends 'r'
+depends 'r', '~> 0.4.0'
 depends 'L7-redis', "=1.0.7"
 depends 'chef-msttcorefonts'
 depends 'zipfile'

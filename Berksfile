@@ -4,8 +4,8 @@ cookbook "cookbook-shibboleth",
   git: "git@github.umn.edu:mcfa0086/cookbook-shibboleth.git"
 
 cookbook "r",
-  git: "https://github.com/thedataincubator/cookbook-r.git",
-  ref: "e2fe1521b8fa777648467e74cff29b907339c10e"
+  git: "git@github.com:davidski/chef-r.git",
+  ref: "0297086c9e2d3fe2de43484ed007dad8e8a52294"
 
 cookbook "chef-msttcorefonts",
   git: "https://github.com/captnswing/chef-msttcorefonts.git", 

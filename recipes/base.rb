@@ -11,8 +11,8 @@ ENV['GIT_SSL_NO_VERIFY'] = "1"
 
 node.override['apt']['compile_time_update'] = true
 
-chef_client_updater 'Install latest Chef 13.x' do
-  version '13'
+chef_client_updater 'Install latest Chef 14.x' do
+  version '14'
   only_if { node['elevator']['upgrade_chef'] == true }
 end
 
