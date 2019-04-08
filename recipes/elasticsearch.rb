@@ -2,16 +2,16 @@ include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::install_code"
 include_recipe "#{cookbook_name}::configure_code"
 
-node.set['java']['install_flavor'] = 'oracle'
-node.set['java']['jdk_version'] = '8'
-node.set['java']['oracle']['accept_oracle_download_terms'] = true
+node.default['java']['install_flavor'] = 'oracle'
+node.default['java']['jdk_version'] = '8'
+node.default['java']['oracle']['accept_oracle_download_terms'] = true
 
 
 
 include_recipe "java"
 
 # take the elasticsearch version from the wrapper cookbook.
-node.set['elasticsearch']['version'] = node['elevator']['elasticsearch']['version']
+node.default['elasticsearch']['version'] = node['elevator']['elasticsearch']['version']
 
 include_recipe "elasticsearch"
 #include_recipe "elasticsearch::aws"

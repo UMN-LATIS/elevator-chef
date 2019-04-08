@@ -3,12 +3,16 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
+  always_update_cookbooks: true
   product_name: chef
   product_version: 13
+  resource_cloning: false
+  deprecations_as_errors: true
   cookbook_path: ["~/.berkshelf/cookbooks/","#{current_dir}/cookbooks"]
   client_rb:
     environment: elevator-dev-1604
+    silence_deprecation_warnings: false
 
 platforms:
   - name: ubuntu-16.04
@@ -18,6 +22,9 @@ suites:
     run_list:
       - recipe[elevator::web]
       - recipe[elevator::messagequeue]
+      - recipe[elevator::redis]
+      - recipe[elevator::elasticsearch]
+      - recipe[elevator::transcode]
     data_bags_path: "../../data_bags/"
     environments_path: "../../environments/"
     encrypted_data_bag_secret_key_path: "/Users/colin/Dropbox/data_bags/chef_encryption_key"

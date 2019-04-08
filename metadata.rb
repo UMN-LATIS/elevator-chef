@@ -21,12 +21,12 @@ depends "apache2"
 depends "acme", "4.0.0"
 depends "database"
 depends "composer"
-depends "beanstalkd"
+depends "beanstalkd", "= 0.3.2"
 depends "ssh_known_hosts"
 depends "cookbook-shibboleth"
 depends "elasticsearch", "= 3.2.1"
 depends 'bluepill'
-depends 'chef-client'
+depends 'chef-client', "= 11.1.2"
 depends 'tar'
 depends 'r'
 depends 'L7-redis', "=1.0.7"

@@ -15,6 +15,9 @@ cookbook "apache2",
 	git: "https://github.com/sous-chefs/apache2",
 	ref: "df45cbfab8246ae0800b11b4cff8b103a0ed2113"
 
+cookbook "beanstalkd",
+  git: "git@github.com:cmcfadden/beanstalkd.git"
+
 # cookbook "apache2", "~> 3.0.0"
 
 metadata
