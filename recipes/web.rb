@@ -185,8 +185,8 @@ if node['elevator']["letsencrypt"]["enable_letsencrypt"] == true
     crt     certPath
     key     keyPath
     chain    intermediatePath
-    owner   "apache"
-    group   "apache"
+    owner   "root"
+    group   "root"
     notifies :restart, "service[apache2]", :immediate
   end
 
