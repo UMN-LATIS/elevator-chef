@@ -130,7 +130,7 @@ certPath = "/etc/apache2/ssl/elevator.crt"
 keyPath =  "/etc/apache2/ssl/elevator.key"
 intermediatePath =  "/etc/apache2/ssl/intermediate.crt"
 
-if node['elevator']["use_letsencrypt"] == false
+if node['elevator']["letsencrypt"]["enable_letsencrypt"] == false
   databag = data_bag_item("elevator", "ssl")
 
   file certPath do
@@ -155,24 +155,6 @@ if node['elevator']["use_letsencrypt"] == false
   end
 end
 
-# TODODODODODO
-if node['elevator']["use_letsencrypt"] == true
-
-  include_recipe 'acme'
-  node.override['acme']['contact'] = ['mailto:mcfa0086@umn.edu']
-  node.override['acme']['endpoint'] = 'https://acme-v01.api.letsencrypt.org'
-  site = "dev.elevator.umn.edu"
-
-  acme_certificate "#{site}" do
-    crt               certPath
-    key               keyPath
-    chain             intermediatePath
-    wwwroot           "/opt/elevator/"
-    notifies :restart, "service[apache2]"
-    # alt_names sans
-  end
-end
-
 
 web_app "elevator_ssl" do
   source "web_app.erb"
@@ -189,6 +171,36 @@ web_app "elevator_ssl" do
   ssl_key keyPath
   enable true
 end
+
+
+if node['elevator']["letsencrypt"]["enable_letsencrypt"] == true
+
+  include_recipe 'acme'
+  node.override['acme']['contact'] = [node['elevator']["letsencrypt"]["contact"]]
+  node.override['acme']['endpoint'] = 'https://acme-v01.api.letsencrypt.org'
+  site = node['elevator']["letsencrypt"]["hostname"]
+  
+  # generate a self-signed cert and boot apache
+  acme_selfsigned "#{site}" do
+    crt     certPath
+    key     keyPath
+    chain    intermediatePath
+    owner   "apache"
+    group   "apache"
+    notifies :restart, "service[apache2]", :immediate
+  end
+
+
+  acme_certificate "#{site}" do
+    crt               certPath
+    key               keyPath
+    chain             intermediatePath
+    wwwroot           "/opt/elevator/"
+    notifies :restart, "service[apache2]"
+    # alt_names sans
+  end
+end
+
 
 cron 'update_date_holds' do
   action :create
