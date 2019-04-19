@@ -9,6 +9,8 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# this will fail in cases where deb-src isn't enabled.  AWS enables by default, but might not in the future
+
 package "libimage-exiftool-perl"
 
 package "libgs-dev"

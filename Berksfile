@@ -1,14 +1,11 @@
 source "https://supermarket.getchef.com"
 
-cookbook "smf",
-  git: "https://github.com/buysse/smf.git",
-  branch: "berkshelf-no-utf8"
-
 cookbook "cookbook-shibboleth",
   git: "git@github.umn.edu:mcfa0086/cookbook-shibboleth.git"
 
 cookbook "r",
-  git: "https://github.com/stevendanna/cookbook-r.git"
+  git: "git@github.com:davidski/chef-r.git",
+  ref: "0297086c9e2d3fe2de43484ed007dad8e8a52294"
 
 cookbook "chef-msttcorefonts",
   git: "https://github.com/captnswing/chef-msttcorefonts.git", 
@@ -17,6 +14,9 @@ cookbook "chef-msttcorefonts",
 cookbook "apache2",
 	git: "https://github.com/sous-chefs/apache2",
 	ref: "df45cbfab8246ae0800b11b4cff8b103a0ed2113"
+
+cookbook "beanstalkd",
+  git: "git@github.com:cmcfadden/beanstalkd.git"
 
 # cookbook "apache2", "~> 3.0.0"
 

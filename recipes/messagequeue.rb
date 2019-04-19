@@ -13,19 +13,21 @@
 include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::users"
 
-node.set['beanstalkd']['start_during_boot'] = true
-node.set['beanstalkd']['opts'] = {
+node.default['beanstalkd']['start_during_boot'] = true
+node.default['beanstalkd']['opts'] = {
   "b" => "/var/lib/beanstalkd"
 }
-node.set['beanstalkd']['listen_addr'] = node['network']['ipaddress'] || "0.0.0.0"
-node.set['beanstalkd']['listen_port'] = 11300
+node.default['beanstalkd']['listen_addr'] = node['network']['ipaddress'] || "0.0.0.0"
+node.default['beanstalkd']['listen_port'] = 11300
 
 include_recipe "beanstalkd"
-include_recipe "python"
+# workaround due to https://github.com/poise/poise-python/issues/140
+node.default['poise-python']['options']['pip_version'] = '18.0'
+include_recipe "poise-python"
 
-python_pip "boto"
-python_pip "beanstalkc"
-python_pip "pyyaml"
+python_package "boto"
+python_package "beanstalkc"
+python_package "pyyaml"
 
 remote_file "/usr/local/bin/beanstalkd_cloudwatch" do
   source "https://raw.githubusercontent.com/erans/beanstalkdcloudwatch/master/beanstalkd_cloudwatch.py"

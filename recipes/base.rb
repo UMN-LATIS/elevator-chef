@@ -9,6 +9,13 @@
 
 ENV['GIT_SSL_NO_VERIFY'] = "1"
 
+node.override['apt']['compile_time_update'] = true
+
+chef_client_updater 'Install latest Chef 14.x' do
+  version '14'
+  only_if { node['elevator']['upgrade_chef'] == true }
+end
+
 
 #this seems hacky, but the apt include actually fails without it
 execute "apt-get-update" do
@@ -53,3 +60,29 @@ end
 
 include_recipe 'chef-client::config'
 include_recipe 'chef-client::service'
+
+
+# docker_installation_package 'default' do
+#   version '18.09.4'
+#   action :create
+#   package_options %q|--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'| # if Ubuntu for example
+# end
+
+# docker_image 'umnelevator/ffmpeg' do
+#   action :pull
+#   tag 'release-0.0.3'
+# end
+
+# docker_container 'ffmpeg_0_0_3_25' do
+#   repo 'umnelevator/ffmpeg'
+#   tag 'release-0.0.3'
+#   action :create
+# end
+
+# execute 'prune old containers' do
+#   command 'docker container prune -f --filter until=5m'
+# end
+
+# execute 'prune old images' do
+#   command 'docker image prune -f --all'
+# end
