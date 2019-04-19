@@ -21,10 +21,6 @@ suites:
   - name: default
     run_list:
       - recipe[elevator::web]
-      - recipe[elevator::messagequeue]
-      - recipe[elevator::redis]
-      - recipe[elevator::elasticsearch]
-      - recipe[elevator::transcode]
     data_bags_path: "../../data_bags/"
     environments_path: "../../environments/"
     encrypted_data_bag_secret_key_path: "/Users/colin/Dropbox/data_bags/chef_encryption_key"

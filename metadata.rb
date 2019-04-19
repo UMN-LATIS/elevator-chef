@@ -31,3 +31,5 @@ depends 'chef-msttcorefonts', "0.9.0"
 depends 'zipfile', "0.1.0"
 depends "poise-python", "1.7.0"
 depends "chef_client_updater", "~> 3.5.2"
+
+depends 'docker', '~> 4.9.2'
