@@ -101,18 +101,6 @@ execute "composer_doctrine_hack" do
 end
 
 
-# More dependencies, not covered by packaged modules
-# php_pear "mongo" do
-# 	action :install
-# end
-
-# this is a workaround for issues with the PHP cookbook
-# on 14.04
-# execute "enable_mongo_php" do
-# 	command "php5enmod mongo"
-# 	# should have a guard
-# end
-
 execute "update_application_models" do
 	cwd node['elevator']['install_directory']
 	command "php doctrine.php orm:generate-entities application/models"

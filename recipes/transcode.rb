@@ -14,133 +14,46 @@ include_recipe "#{cookbook_name}::base"
 include_recipe "#{cookbook_name}::users"
 include_recipe "#{cookbook_name}::install_code"
 include_recipe "#{cookbook_name}::configure_code"
-include_recipe "#{cookbook_name}::imagemagick"
 
-include_recipe "chef-msttcorefonts"
 
-# provides FFMPEG
-apt_repository "jonathonf_ffmpeg_3" do
-  uri "ppa:jonathonf/ffmpeg-3"
-  distribution node['lsb']['codename']
+docker_installation_package 'default' do
+  version '18.09.4'
+  action :create
+  package_options %q|--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'| # if Ubuntu for example
 end
 
-# Provides VIPS
-apt_repository "dhor_myway" do
-  uri "ppa:dhor/myway"
-  distribution node['lsb']['codename']
-end
-
-# We need a PPA for some of this software
-# apt_repository "coolwanglu_pdf2htmlex" do
-#   uri "ppa:coolwanglu/pdf2htmlex"
-#   distribution node['lsb']['codename']
-# end
-
-
-####
-# OpenJPEG on Ubuntu 14.04 is broken - doesn't support mixed res color components which breaks vips.
-# Force install the version of saucy.
-####
-
-remote_file "/tmp/old_openjpeg.deb" do
-  source "http://launchpadlibrarian.net/147357170/libopenjpeg2_1.3%2Bdfsg-4.6ubuntu2_amd64.deb"
-  mode 0644
-end
-
-dpkg_package "old_openjpeg" do
-  source "/tmp/old_openjpeg.deb"
-  action :install
-end
-
-execute 'hold_old_openjpeg' do
-  command '/usr/bin/apt-mark hold libopenjpeg2'
+node[:elevator][:containers].each do |k,v|
+  imageName = "umnelevator/#{k}"
+  docker_image imageName do
+    action :pull
+    tag v[:version]
+  end
+  docker_container k.gsub(/\//, "_").concat((Time.now.to_f * 1000).to_i.to_s) do
+    repo imageName
+    tag v[:version]
+    action :run
+  end
+  template "/usr/local/bin/#{v[:command].nil? ? k : v[:command]}" do
+	  source "dockerCommand.erb"
+	  variables ({
+		  :dockerImage => k,
+		  :dockerVersion => v[:version],
+		  :dockerCommand => v[:command].nil? ? "" : v[:command]
+    })
+    mode 0777
+  end
 end
 
 
-###
-# libtiff4 is missing on ubuntu 14.04
-# and is required for libpoppler / poppler, which provides pdfimages
-###
-
-remote_file "/tmp/libtiff4.deb" do
-  source "http://old-releases.ubuntu.com/ubuntu/pool/universe/t/tiff3/libtiff4_3.9.7-2ubuntu1_amd64.deb"
-  mode 0644
+execute 'prune old containers' do
+  command 'docker container prune -f --filter until=55m'
 end
 
-dpkg_package "libtiff4" do
-  source "/tmp/libtiff4.deb"
-  action :install
+execute 'prune old images' do
+  command 'docker image prune -f --all'
 end
-
-# package "imagemagick"
-package "ffmpeg"  # TODO: might not include qtfaststart
-package "yamdi"
-package "blender"
-package "meshlab" # might need to come from a different PPA
-package "gifsicle"
-package "gnuplot"
-package "libvips42"
-package "xvfb"
-package "libvips-tools"
-package "openslide-tools"
-package "libreoffice"
-package "libreoffice-script-provider-python"
-package "unoconv"
-package "ghostscript"
-package "libpoppler58"
-package "poppler-utils"
-package "tesseract-ocr"
-package "gpac"
-
-node.default["r"]["install_method"] = "package"
-node.default["r"]["cran_mirror"] = "http://cran.rstudio.com/"
-include_recipe "r"
-
-# r_package "Rcpp"
-r_package "ggplot2"
-
-
-service "xvfb" do
-  supports :restart => true, :start => true, :stop => true, :reload => true
-  action :nothing
-end
-
-
-template "xvfb" do
-  path "/etc/init.d/xvfb"
-  source "xvfb.erb"
-  owner "root"
-  group "root"
-  mode "0755"
-  notifies :enable, "service[xvfb]"
-  notifies :start, "service[xvfb]"
-end
-
-include_recipe "elevator::nxsbuild"
-include_recipe "elevator::rtibuild"
 
 include_recipe "bluepill"
-
-
-git '/usr/local/bin/spatial-media' do
-  repository 'https://github.com/google/spatial-media.git'
-  revision 'master'
-  action :sync
-end
-
-# workaround due to https://github.com/poise/poise-python/issues/140
-node.default['poise-python']['options']['pip_version'] = '18.0'
-
-
-include_recipe "poise-python"
-python_package "pillow"
-python_package "pypdfocr"
-
-git '/usr/local/bin/imagepacker' do
-  repository 'https://github.com/UMN-LATIS/imagepacker.git'
-  revision 'master'
-  action :sync
-end
 
 
 template '/etc/bluepill/elevatorTranscode.pill' do

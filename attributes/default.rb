@@ -56,21 +56,21 @@ default['elevator']['config']['scratchspace'] = '/scratch'
 default['elevator']['config']['email']['smtphost'] = ''
 
 # binaries.  By default, assume in default path.
-default['elevator']['config']['binaries']['blender'] = 'blender'
-default['elevator']['config']['binaries']['ffmpeg'] = 'ffmpeg'
-default['elevator']['config']['binaries']['ffprobe'] = 'ffprobe'
+default['elevator']['config']['binaries']['blender'] = '/usr/local/bin/blender'
+default['elevator']['config']['binaries']['ffmpeg'] = '/usr/local/bin/ffmpeg'
+default['elevator']['config']['binaries']['ffprobe'] = '/usr/local/bin/ffprobe'
 default['elevator']['config']['binaries']['yamdi'] = 'yamdi'
 default['elevator']['config']['binaries']['qtfaststart'] = 'qtfaststart'
-default['elevator']['config']['binaries']['convert'] = 'convert'
+default['elevator']['config']['binaries']['convert'] = '/usr/local/bin/convert'
 default['elevator']['config']['binaries']['gifsicle'] = 'gifsicle'
-default['elevator']['config']['binaries']['meshlabPath'] = 'meshlabserver'
+default['elevator']['config']['binaries']['meshlabPath'] = '/usr/local/bin/meshlab'
 default['elevator']['config']['binaries']['nxsbuild_dir'] = '/usr/local/bin/nxsbuild'
 default['elevator']['config']['binaries']['nxsedit_dir'] = '/usr/local/bin/nxsedit'
 default['elevator']['config']['binaries']['rtibuild_dir'] = '/usr/local/bin/rtibuild'
-default['elevator']['config']['binaries']['vipsPath'] = 'vips'
-default['elevator']['config']['binaries']['gnuPlot'] = 'gnuplot'
-default['elevator']['config']['binaries']['pypdfocr'] = 'pypdfocr'
-default['elevator']['config']['binaries']['spatialMedia'] = '/usr/local/bin/spatial-media/spatialmedia'
+default['elevator']['config']['binaries']['vipsPath'] = '/usr/local/bin/vips'
+default['elevator']['config']['binaries']['gnuPlot'] = '/usr/local/bin/gnuplot'
+default['elevator']['config']['binaries']['pypdfocr'] = '/usr/local/bin/ocrmypdf'
+default['elevator']['config']['binaries']['spatialMedia'] = '/usr/local/bin/spatial'
 
 
 # TODO: include options for XSS filtering and CSRF token
@@ -126,3 +126,31 @@ default['elevator']['config']['jwplayer'] = ""
 default['elevator']['config']['googleapi'] = ""
 default['elevator']['config']['apiKey'] = ""
 default['elevator']['config']['apiSecret'] = ""
+
+
+
+default['elevator']['containers']['ffmpeg']['version'] = "latest"
+default['elevator']['containers']['ffmpeg']['command'] = "ffmpeg"
+default['elevator']['containers']['ffmpeg']['version'] = "latest"
+default['elevator']['containers']['ffmpeg']['command'] = "MP4Box"
+default['elevator']['containers']['ffmpeg']['version'] = "latest"
+default['elevator']['containers']['ffmpeg']['command'] = "ffprobe"
+default['elevator']['containers']['vips']['version'] = "latest"
+default['elevator']['containers']['exiftool']['version'] = "latest"
+default['elevator']['containers']['rtibuild']['version'] = "latest"
+default['elevator']['containers']['r-lang']['version'] = "latest"
+default['elevator']['containers']['pdfutils']['version'] = "latest"
+default['elevator']['containers']['pdfutils']['command'] = "ocrmypdf"
+default['elevator']['containers']['pdfutils']['version'] = "latest"
+default['elevator']['containers']['pdfutils']['command'] = "shrinkpdf"
+default['elevator']['containers']['openoffice']['version'] = "latest"
+default['elevator']['containers']['nxsbuild']['version'] = "latest"
+default['elevator']['containers']['meshlab']['version'] = "latest"
+default['elevator']['containers']['imagemagick']['version'] = "latest"
+default['elevator']['containers']['imagemagick']['command'] = "convert"
+default['elevator']['containers']['imagemagick']['version'] = "latest"
+default['elevator']['containers']['imagemagick']['command'] = "identify"
+default['elevator']['containers']['exiftool']['version'] = "latest"
+default['elevator']['containers']['blender']['version'] = "latest"
+default['elevator']['containers']['spatial']['version'] = "latest"
+default['elevator']['containers']['gnuplot']['version'] = "latest"
