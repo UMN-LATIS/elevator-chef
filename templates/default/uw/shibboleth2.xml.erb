@@ -1,0 +1,66 @@
+<!--
+DO NOT MODIFY!
+Auto-generated on 2015-03-10 11:24:49 -0500 by Shibboleth's Lil Helper:
+Changes should not be made directly to this file. Instead, modify your slh config.rb file, re-generate, and re-deploy
+This template was originally created by taking the default /etc/shibboleth/shibboleth2.xml and modifying/templating it
+to accommodate multiple vhosts (for both IIS and Apache) for the shibboleth-2.4.3-2.1.el5 RPM on RHEL 5
+-->
+<SPConfig xmlns="urn:mace:shibboleth:2.0:native:sp:config" xmlns:conf="urn:mace:shibboleth:2.0:native:sp:config"
+  xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+  xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" clockSkew="180">
+
+  <OutOfProcess logger="shibd.logger" />
+  <InProcess logger="native.logger" />
+
+  <RequestMapper type="Native">
+    <RequestMap>
+
+      <Host name="elevator.uw.edu" applicationId="elevator.uw.edu" authType="shibboleth"
+        requireSession="false">
+
+      </Host>
+
+    </RequestMap>
+  </RequestMapper>
+  <ApplicationDefaults entityID="https://elevator.uw.edu/default" REMOTE_USER="eppn mail" signing="true">
+    <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="false"
+      idpHistory="false">
+      <SSO id="UW" isDefault="true" entityID="urn:mace:incommon:washington.edu" conf:ignoreNoPassive="true" ignoreNoPassive="true">
+        SAML2 SAML1
+      </SSO>
+      <Logout>Local</Logout>
+
+      <Handler type="MetadataGenerator" Location="/Metadata" signing="false" />
+      <Handler type="Status" Location="/Status" acl="127.0.0.1" />
+      <!-- NOTE: this acl bit, makes this Shibboleth.sso/Status url only available from the server, not publically, this is an important security feature. -->
+      <Handler type="Session" Location="/Session" showAttributeValues="false" />
+      <Handler type="DiscoveryFeed" Location="/DiscoFeed" />
+    </Sessions>
+    <Errors supportContact="server-help@cla.umn.edu" logoLocation="/shibboleth-sp/logo.jpg"
+      styleSheet="/shibboleth-sp/main.css" />
+
+    <MetadataProvider type="XML" url="https://idp.u.washington.edu/metadata/idp-metadata.xml"
+      backingFilePath="idp-metadata.xml" reloadInterval="7200">
+    </MetadataProvider>
+    <AttributeExtractor type="XML" validate="true" path="attribute-map.xml" />
+    <AttributeResolver type="Query" subjectMatch="true" />
+    <AttributeFilter type="XML" validate="true" path="attribute-policy.xml" />
+    <CredentialResolver type="File">
+      <Certificate>
+        <Path>sp-cert.pem</Path>
+      </Certificate>
+      <Key>
+        <Path>sp-key.pem</Path>
+        <!--
+This key alias is used by Shibbleth's lil' Helper to
+determine whether or not a generated SP metadata is
+up-to-date. It is NOT used by anything Shibboleth.
+-->
+        <Name>SLH_VERSION_d6287ccf90063ee87f6c3de62846f83b8fbe</Name>
+      </Key>
+    </CredentialResolver>
+
+  </ApplicationDefaults>
+  <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml" />
+  <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml" />
+</SPConfig>

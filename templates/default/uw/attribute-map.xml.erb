@@ -1,0 +1,111 @@
+<!-- Mappings for attributes the UW IdP can release -->
+ 
+<Attributes xmlns="urn:mace:shibboleth:2.0:attribute-map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ 
+    <!-- affiliation -->
+    <Attribute name="urn:mace:dir:attribute-def:eduPersonAffiliation" id="unscoped-affiliation">
+        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+    </Attribute>
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.1" id="unscoped-affiliation">
+        <AttributeDecoder xsi:type="StringAttributeDecoder" caseSensitive="false"/>
+    </Attribute>
+ 
+    <!-- assurance -->
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.11" id="assurance"/>
+  
+    <!-- attributePersistentID -->
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" id="persistent-id">
+        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name"
+            defaultQualifiers="true"/>
+    </Attribute>
+ 
+    <!-- cn -->
+    <Attribute name="urn:mace:dir:attribute-def:cn" id="cn"/>
+    <Attribute name="urn:oid:2.5.4.3" id="cn"/>
+ 
+    <!-- displayName -->
+    <Attribute name="urn:mace:dir:attribute-def:displayName" id="displayName"/>
+    <Attribute name="urn:oid:2.16.840.1.113730.3.1.241" id="displayName"/>
+ 
+    <!-- email -->
+    <Attribute name="urn:mace:dir:attribute-def:mail" id="mail"/>
+    <Attribute name="urn:oid:0.9.2342.19200300.100.1.3" id="mail"/>
+ 
+    <!-- employeeNumber -->
+    <Attribute name="urn:mace:dir:attribute-def:employeeNumber" id="employeeNumber"/>
+    <Attribute name="urn:oid:2.16.840.1.113730.3.1.3" id="employeeNumber"/>
+ 
+    <!-- entitlement_lib -->
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.7" id="entitlement_lib"/>
+ 
+    <!-- entitlement_sln -->
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.7" id="entitlement_sln"/>
+ 
+    <!-- ePPN -->
+    <Attribute name="urn:mace:dir:attribute-def:eduPersonPrincipalName" id="eppn">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder"/>
+    </Attribute>
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" id="eppn">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder"/>
+    </Attribute>
+ 
+    <!-- ePTID -->
+    <Attribute name="urn:mace:dir:attribute-def:eduPersonTargetedID" id="targeted-id">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder"/>
+    </Attribute>
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" id="targeted-id">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder"/>
+    </Attribute>
+ 
+    <!-- givenName  -->
+    <Attribute name="urn:mace:dir:attribute-def:givenName" id="givenName"/>
+    <Attribute name="urn:oid:2.5.4.42" id="givenName"/>
+ 
+    <!-- gws_groups -->
+    <Attribute name="urn:mace:dir:attribute-def:isMemberOf" id="gws_groups"/>
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.5.1.1" id="gws_groups"/>
+ 
+    <!-- homeDepartment -->
+    <Attribute name="urn:oid:2.5.4.11" id="department"/>
+ 
+    <!-- mailstop -->
+    <Attribute name="urn:oid:2.5.4.18" id="mailstop"/>
+ 
+    <!-- nameIDPersistentID -->
+    <Attribute name="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" id="persistent-id">
+        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name"
+            defaultQualifiers="true"/>
+    </Attribute>
+ 
+    <!-- phone (whitepages) -->
+    <Attribute name="urn:oid:2.5.4.20" id="phone"/>
+ 
+    <!-- scopedAffiliation -->
+    <Attribute name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation" id="affiliation">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+    </Attribute>
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9" id="affiliation">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+    </Attribute>
+ 
+    <!-- surname -->
+    <Attribute name="urn:mace:dir:attribute-def:sn" id="sn"/>
+    <Attribute name="urn:oid:2.5.4.4" id="sn"/>
+  
+    <!-- title (whitepages) -->
+    <Attribute name="urn:oid:2.5.4.12" id="title"/>
+ 
+    <!-- uwNetID -->
+    <Attribute name="urn:oid:0.9.2342.19200300.100.1.1" id="uwnetid"/>
+ 
+    <!-- uwRegID -->
+    <Attribute name="urn:oid:1.2.840.113994.200.24" id="uwRegID"/>
+ 
+    <!-- uwStudentID -->
+    <Attribute name="urn:oid:1.2.840.113994.200.21" id="uwStudentID"/>
+  
+    <!-- uwStudentSystemKey -->
+    <Attribute name="urn:oid:1.2.840.113994.200.20" id="uwStudentSystemKey"/>
+ 
+ 
+</Attributes>
