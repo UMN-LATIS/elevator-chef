@@ -33,14 +33,24 @@ node[:elevator][:containers].each do |k,v|
     tag v[:version]
     action :run
   end
-  template "/usr/local/bin/#{v[:command].nil? ? k : v[:command]}" do
-	  source "dockerCommand.erb"
-	  variables ({
-		  :dockerImage => k,
-		  :dockerVersion => v[:version],
-		  :dockerCommand => v[:command].nil? ? "" : v[:command]
-    })
-    mode 0777
+  overrideCommand = false
+  if v[:command].nil?
+    commands = [k]
+  else
+    commands = v[:command]
+    overrideCommand = true
+  end
+  
+  commands.each do |command|
+    template "/usr/local/bin/#{command}" do
+      source "dockerCommand.erb"
+      variables ({
+        :dockerImage => k,
+        :dockerVersion => v[:version],
+        :dockerCommand => overrideCommand ? command : ""
+      })
+      mode 0777
+    end
   end
 end
 
