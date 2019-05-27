@@ -71,6 +71,9 @@ default['elevator']['config']['binaries']['vipsPath'] = '/usr/local/bin/vips'
 default['elevator']['config']['binaries']['gnuPlot'] = '/usr/local/bin/gnuplot'
 default['elevator']['config']['binaries']['pypdfocr'] = '/usr/local/bin/ocrmypdf'
 default['elevator']['config']['binaries']['spatialMedia'] = '/usr/local/bin/spatial'
+default['elevator']['config']['binaries']['shrinkpdf'] = '/usr/local/bin/shrinkpdf'
+default['elevator']['config']['binaries']['pdfinfo'] = '/usr/local/bin/pdfinfo'
+default['elevator']['config']['binaries']['pdftotext'] = '/usr/local/bin/pdftotext'
 
 
 # TODO: include options for XSS filtering and CSRF token
@@ -136,7 +139,7 @@ default['elevator']['containers']['exiftool']['version'] = "latest"
 default['elevator']['containers']['rtibuild']['version'] = "latest"
 default['elevator']['containers']['r-lang']['version'] = "latest"
 default['elevator']['containers']['pdfutils']['version'] = "latest"
-default['elevator']['containers']['pdfutils']['command'] = ["ocrmypdf", "shrinkpdf"]
+default['elevator']['containers']['pdfutils']['command'] = ["ocrmypdf", "shrinkpdf", "pdftotext","pdfinfo"]
 default['elevator']['containers']['openoffice']['version'] = "latest"
 default['elevator']['containers']['nxsbuild']['version'] = "latest"
 default['elevator']['containers']['meshlab']['version'] = "latest"
