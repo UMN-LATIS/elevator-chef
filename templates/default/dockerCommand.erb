@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run --memory=0  --rm -v /scratch:/scratch umnelevator/<%= @dockerImage %>:<%= @dockerVersion %> <%= @dockerCommand %> $@
+docker run --memory=0  --rm -i -v /scratch:/scratch umnelevator/<%= @dockerImage %>:<%= @dockerVersion %> <%= @dockerCommand %> "$@"

@@ -74,6 +74,9 @@ default['elevator']['config']['binaries']['spatialMedia'] = '/usr/local/bin/spat
 default['elevator']['config']['binaries']['shrinkpdf'] = '/usr/local/bin/shrinkpdf'
 default['elevator']['config']['binaries']['pdfinfo'] = '/usr/local/bin/pdfinfo'
 default['elevator']['config']['binaries']['pdftotext'] = '/usr/local/bin/pdftotext'
+default['elevator']['config']['binaries']['mogrify'] = '/usr/local/bin/mogrify'
+default['elevator']['config']['binaries']['montage'] = '/usr/local/bin/montage'
+default['elevator']['config']['binaries']['identify'] = '/usr/local/bin/identify'
 
 
 # TODO: include options for XSS filtering and CSRF token
@@ -144,7 +147,7 @@ default['elevator']['containers']['openoffice']['version'] = "latest"
 default['elevator']['containers']['nxsbuild']['version'] = "latest"
 default['elevator']['containers']['meshlab']['version'] = "latest"
 default['elevator']['containers']['imagemagick']['version'] = "latest"
-default['elevator']['containers']['imagemagick']['command'] = ["convert", "identify"]
+default['elevator']['containers']['imagemagick']['command'] = ["convert", "identify", "mogrify", "montage"]
 default['elevator']['containers']['exiftool']['version'] = "latest"
 default['elevator']['containers']['blender']['version'] = "latest"
 default['elevator']['containers']['spatial']['version'] = "latest"
