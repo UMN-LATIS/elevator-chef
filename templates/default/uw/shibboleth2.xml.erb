@@ -15,8 +15,7 @@ to accommodate multiple vhosts (for both IIS and Apache) for the shibboleth-2.4.
   <RequestMapper type="Native">
     <RequestMap>
 
-      <Host name="elevator.som.uw.edu" applicationId="elevator.som.uw.edu" authType="shibboleth"
-        requireSession="false">
+      <Host name="elevator.som.uw.edu" applicationId="elevator.som.uw.edu" authType="shibboleth" requireSession="false">
 
       </Host>
 
@@ -25,7 +24,8 @@ to accommodate multiple vhosts (for both IIS and Apache) for the shibboleth-2.4.
   <ApplicationDefaults entityID="https://elevator.som.uw.edu/default" REMOTE_USER="eppn mail" signing="true">
     <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="false"
       idpHistory="false">
-      <SSO id="UW" isDefault="true" entityID="urn:mace:incommon:washington.edu" conf:ignoreNoPassive="true" ignoreNoPassive="true">
+      <SSO id="UW" isDefault="true" entityID="urn:mace:incommon:washington.edu" conf:ignoreNoPassive="true"
+        ignoreNoPassive="true">
         SAML2 SAML1
       </SSO>
       <Logout>Local</Logout>
@@ -59,6 +59,52 @@ up-to-date. It is NOT used by anything Shibboleth.
         <Name>SLH_VERSION_d6287ccf90063ee87f6c3de62846f83b8fbe</Name>
       </Key>
     </CredentialResolver>
+
+
+
+    <ApplicationOverride id="elevator.som.uw.edu" homeURL="https://elevator.som.uw.edu">
+      <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="false"
+        idpHistory="false">
+        <SSO entityID="urn:mace:incommon:washington.edu" conf:ignoreNoPassive="true">
+          SAML2 SAML1
+        </SSO>
+        <Logout>Local</Logout>
+
+        <Handler type="MetadataGenerator" Location="/Metadata" signing="false" />
+        <Handler type="Status" Location="/Status" acl="127.0.0.1" />
+        <!-- NOTE: this acl bit, makes this Shibboleth.sso/Status url only available from the server, not publically, this is an important security feature. -->
+        <Handler type="Session" Location="/Session" showAttributeValues="false" />
+        <Handler type="DiscoveryFeed" Location="/DiscoFeed" />
+      </Sessions>
+      <Errors supportContact="server-help@cla.umn.edu" logoLocation="/shibboleth-sp/logo.jpg"
+        styleSheet="/shibboleth-sp/main.css" />
+      <MetadataProvider type="XML" url="https://idp.u.washington.edu/metadata/idp-metadata.xml"
+        backingFilePath="idp-metadata.xml" reloadInterval="7200">
+      </MetadataProvider>
+      <AttributeExtractor type="XML" validate="true" path="attribute-map.xml" />
+      <AttributeResolver type="Query" subjectMatch="true" />
+      <AttributeFilter type="XML" validate="true" path="attribute-policy.xml" />
+      <CredentialResolver type="File">
+        <Certificate>
+          <Path>sp-cert.pem</Path>
+        </Certificate>
+        <Key>
+          <Path>sp-key.pem</Path>
+          <!--
+    This key alias is used by Shibbleth's lil' Helper to
+    determine whether or not a generated SP metadata is
+    up-to-date. It is NOT used by anything Shibboleth.
+    -->
+          <Name>SLH_VERSION_d6287ccf90063ee87f6c3de62846f83b8fbe</Name>
+        </Key>
+      </CredentialResolver>
+
+
+
+
+    </ApplicationOverride>
+
+
 
   </ApplicationDefaults>
   <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml" />
