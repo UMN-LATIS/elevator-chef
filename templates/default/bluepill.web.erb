@@ -17,24 +17,13 @@ Bluepill.application("elevatorWeb") do |app|
     process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
   end
 
-  2.times do |i|
+  6.times do |i|
     app.process("reindex-#{i}") do |process|
       process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive updateIndexes"
       process.group = "dcl"
       process.daemonize = true
       process.pid_file = "/tmp/updateIndexes-#{i}"
       process.stdout = process.stderr = "/tmp/updateIndexes.log"
-      process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
-    end
-  end
-
-  6.times do |i|
-    app.process("rebuildCache-#{i}") do |process|
-      process.start_command = "/usr/bin/php <%= node['elevator']['install_directory'] %>/index.php beltdrive rebuildCache"
-      process.group = "dcl"
-      process.daemonize = true
-      process.pid_file = "/tmp/rebuildCache-#{i}"
-      process.stdout = process.stderr = "/tmp/rebuildCache.log"
       process.checks :mem_usage, :every => 20.seconds, :below => 100.megabytes, :times => [3,5]
     end
   end
