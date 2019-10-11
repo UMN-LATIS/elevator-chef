@@ -76,6 +76,9 @@ AddOutputFilterByType DEFLATE text/css
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+
     #Removes access to the system folder by users.
     #Additionally this will allow you to create a System.php controller,
     #previously this would not have been possible.
