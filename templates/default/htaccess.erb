@@ -79,6 +79,11 @@ AddOutputFilterByType DEFLATE text/css
     RewriteCond %{HTTPS} off
     RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
 
+    # rule for St. Olaf, Per Jason on 12/27/2019
+    RewriteCond %{HTTP_HOST} (elevator.stolaf.edu)
+    RewriteCond %{REQUEST_URI} ^/wlc
+    RewriteRule ^wlc(.*)$ /languages$1 [R,L]
+
     #Removes access to the system folder by users.
     #Additionally this will allow you to create a System.php controller,
     #previously this would not have been possible.
