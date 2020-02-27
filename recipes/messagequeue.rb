@@ -37,6 +37,8 @@ end
 databag = data_bag_item("elevator", "aws")
 
 
+# TODO: check that pythong is realy installed and this script runs?
+
 cron 'update_cloudwatch' do
   action :create
   minute '*'

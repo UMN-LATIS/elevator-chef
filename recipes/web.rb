@@ -177,7 +177,8 @@ if node['elevator']["letsencrypt"]["enable_letsencrypt"] == true
 
   include_recipe 'acme'
   node.override['acme']['contact'] = [node['elevator']["letsencrypt"]["contact"]]
-  node.override['acme']['endpoint'] = 'https://acme-v01.api.letsencrypt.org'
+  # node.override['acme']['endpoint'] = 'https://acme-v02.api.letsencrypt.org'
+  node.override['acme']['dir'] = 'https://acme-v02.api.letsencrypt.org/directory'
   site = node['elevator']["letsencrypt"]["hostname"]
   
   # generate a self-signed cert and boot apache

@@ -31,6 +31,7 @@ node[:elevator][:containers].each do |k,v|
   docker_container k.gsub(/\//, "_").concat((Time.now.to_f * 1000).to_i.to_s) do
     repo imageName
     tag v[:version]
+    running_wait_time 60
     action :run
   end
   overrideCommand = false
@@ -51,6 +52,13 @@ node[:elevator][:containers].each do |k,v|
       })
       mode 0777
     end
+  end
+
+  ruby_block "sleep for 10"
+    action :nothing
+	  block do
+		  sleep 10
+	  end
   end
 end
 
