@@ -54,7 +54,7 @@ node[:elevator][:containers].each do |k,v|
     end
   end
 
-  ruby_block "sleep for 10"
+  ruby_block "sleep for 10" do
     action :nothing
 	  block do
 		  sleep 10

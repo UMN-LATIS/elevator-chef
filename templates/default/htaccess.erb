@@ -84,6 +84,11 @@ AddOutputFilterByType DEFLATE text/css
     RewriteCond %{REQUEST_URI} ^/wlc
     RewriteRule ^wlc(.*)$ /languages$1 [R,L]
 
+    RewriteCond %{HTTP_HOST} (elevator.stolaf.edu)
+    RewriteCond %{REQUEST_URI} ^/include-excel
+    RewriteRule ^include-excel/?$ /include-excel/collections/browseCollection/321 [R,L]
+
+
     #Removes access to the system folder by users.
     #Additionally this will allow you to create a System.php controller,
     #previously this would not have been possible.
