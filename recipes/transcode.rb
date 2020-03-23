@@ -31,8 +31,9 @@ node[:elevator][:containers].each do |k,v|
   docker_container k.gsub(/\//, "_").concat((Time.now.to_f * 1000).to_i.to_s) do
     repo imageName
     tag v[:version]
-    running_wait_time 60
+    running_wait_time 120
     action :run
+    only_if { ::File.exist?("/usr/local/bin/#{command}") }
   end
   overrideCommand = false
   if v[:command].nil?
@@ -54,12 +55,6 @@ node[:elevator][:containers].each do |k,v|
     end
   end
 
-  ruby_block "sleep for 10" do
-    action :nothing
-	  block do
-		  sleep 10
-	  end
-  end
 end
 
 

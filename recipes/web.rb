@@ -128,9 +128,10 @@ end
 
 certPath = "/etc/apache2/ssl/elevator.crt"
 keyPath =  "/etc/apache2/ssl/elevator.key"
-intermediatePath =  "/etc/apache2/ssl/intermediate.crt"
+
 
 if node['elevator']["letsencrypt"]["enable_letsencrypt"] == false
+  intermediatePath =  "/etc/apache2/ssl/intermediate.crt"
   databag = data_bag_item("elevator", "ssl")
 
   file certPath do
