@@ -37,6 +37,8 @@ include_recipe "composer::self_update"
 
 include_recipe "#{cookbook_name}::users"
 
+# include_recipe "#{cookbook_name}::pgbouncer"
+
 directory node['elevator']['install_directory'] do
 	user node['elevator']['user']
 	group node['elevator']['group']

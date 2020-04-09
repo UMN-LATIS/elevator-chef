@@ -228,3 +228,17 @@ end
 bluepill_service 'elevatorWeb' do
   action [:enable, :load, :start]
 end
+
+
+# TODO:  host limits connections per IP
+#/sbin/iptables -A INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 60 -j REJECT --reject-with tcp-reset
+#/sbin/iptables -A INPUT -p tcp --syn --dport 443 -m connlimit --connlimit-above 60 -j REJECT --reject-with tcp-reset
+
+# iptables_rule 'Rate limit' do
+#   table :filter
+#   chain :INPUT
+#   protocol :tcp
+#   match 'socket'
+#   ip_version :ipv4
+#   jump 'REJECT'
+# end

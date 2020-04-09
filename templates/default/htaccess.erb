@@ -121,3 +121,8 @@ AddOutputFilterByType DEFLATE text/css
 </IfModule>
 
 
+# set samesite if we're not on iOS 12/MacOS 14 safari, since it has a bug with samesite none
+<If "%{HTTP_USER_AGENT} !~ /(iPhone; CPU iPhone OS 1[0-2]|iPad; CPU OS 1[0-2]|iPod touch; CPU iPhone OS 1[0-2]|Macintosh; Intel Mac OS X.*Version\x2F1[0-2].*Safari|Macintosh;.*Mac OS X 10_14.* AppleWebKit.*Version\x2F1[0-3].*Safari)/i">
+Header edit Set-Cookie (.*) "$1;Secure;SameSite=None"
+Header always edit Set-Cookie (.*) "$1;Secure;SameSite=None"
+</If>

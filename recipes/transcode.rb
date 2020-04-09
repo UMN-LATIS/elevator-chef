@@ -28,13 +28,7 @@ node[:elevator][:containers].each do |k,v|
     action :pull
     tag v[:version]
   end
-  docker_container k.gsub(/\//, "_").concat((Time.now.to_f * 1000).to_i.to_s) do
-    repo imageName
-    tag v[:version]
-    running_wait_time 120
-    action :run
-    only_if { ::File.exist?("/usr/local/bin/#{command}") }
-  end
+
   overrideCommand = false
   if v[:command].nil?
     commands = [k]
@@ -43,6 +37,14 @@ node[:elevator][:containers].each do |k,v|
     overrideCommand = true
   end
   
+  docker_container k.gsub(/\//, "_").concat((Time.now.to_f * 1000).to_i.to_s) do
+    repo imageName
+    tag v[:version]
+    running_wait_time 120
+    action :run
+    only_if { ::File.exist?("/usr/local/bin/#{commands.first}") }
+  end
+
   commands.each do |command|
     template "/usr/local/bin/#{command}" do
       source "dockerCommand.erb"
