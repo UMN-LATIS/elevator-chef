@@ -37,6 +37,13 @@ node[:elevator][:containers].each do |k,v|
     overrideCommand = true
   end
   
+  ruby_block 'set_first_run_state' do
+    block do
+      node.run_state['not_first_run'] = true
+    end
+    only_if { ::File.exist?("/usr/local/bin/#{commands.first}") }
+  end
+
   docker_container k.gsub(/\//, "_").concat((Time.now.to_f * 1000).to_i.to_s) do
     repo imageName
     tag v[:version]
@@ -62,10 +69,12 @@ end
 
 execute 'prune old containers' do
   command 'docker container prune -f --filter until=55m'
+  only_if {node.run_state.has_key? 'not_first_run'}
 end
 
 execute 'prune old images' do
   command 'docker image prune -f --all'
+  only_if {node.run_state.has_key? 'not_first_run'}
 end
 
 include_recipe "bluepill"

@@ -133,6 +133,7 @@ default['elevator']['config']['googleapi'] = ""
 default['elevator']['config']['apiKey'] = ""
 default['elevator']['config']['apiSecret'] = ""
 default['elevator']['config']['css_override'] = 'FALSE'
+default['elevator']['config']['restrict_hidden_assets'] = 'FALSE'
 
 
 default['elevator']['containers']['ffmpeg']['version'] = "latest"
