@@ -4,9 +4,9 @@ maintainer_email 'buysse@umn.edu'
 license          'All rights reserved'
 description      'Installs/Configures --test-kitchen'
 long_description 'Installs/Configures --test-kitchen'
-version          '1.0.6'
+version          '1.1.0'
 
-supports "ubuntu", "16.04"
+supports "ubuntu", "20.04"
 
 depends 'iptables', "=2.0.0"
 

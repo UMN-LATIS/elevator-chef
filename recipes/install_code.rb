@@ -5,17 +5,17 @@ node.default['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
 
 # install PHP
 include_recipe "php"
-package "php7.0-pgsql"
-package "php7.0-curl"
-package "php7.0-ldap"
+package "php7.4-pgsql"
+package "php7.4-curl"
+package "php7.4-ldap"
 package "php-apcu"
 package "php-mongodb"
 # package "php-imagick"
-package "php7.0-dev"
+package "php7.4-dev"
 package "php-redis"
 package "zip"
 package "unzip"
-package "php7.0-zip"
+package "php7.4-zip"
 
 package "git-flow"
 

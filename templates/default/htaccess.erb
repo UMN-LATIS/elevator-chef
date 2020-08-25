@@ -88,6 +88,8 @@ AddOutputFilterByType DEFLATE text/css
     RewriteCond %{REQUEST_URI} ^/include-excel
     RewriteRule ^include-excel/?$ /include-excel/collections/browseCollection/321 [R,L]
 
+    RedirectMatch 404 /\.git
+    RedirectMatch 404 /\.gitignore
 
     #Removes access to the system folder by users.
     #Additionally this will allow you to create a System.php controller,

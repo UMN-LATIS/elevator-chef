@@ -86,7 +86,7 @@ execute 'toggle_php7_mod' do
 end
 
 
-file "/etc/php/7.0/apache2/conf.d/50-tune-opcache.ini" do
+file "/etc/php/7.4/apache2/conf.d/50-tune-opcache.ini" do
     owner "root"
     group "root"
     mode "0755"
