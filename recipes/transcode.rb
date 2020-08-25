@@ -17,9 +17,9 @@ include_recipe "#{cookbook_name}::configure_code"
 
 
 docker_installation_package 'default' do
-  version '18.09.4'
+  version '19.03.12'
   action :create
-  package_options %q|--force-yes -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'| # if Ubuntu for example
+  package_options %q| -o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-all'| # if Ubuntu for example
 end
 
 node[:elevator][:containers].each do |k,v|

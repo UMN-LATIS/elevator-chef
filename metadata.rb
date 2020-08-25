@@ -14,7 +14,7 @@ depends "apt", "~> 7.1.1"
 depends "apt-upgrade-once", "0.2.1"
 depends "git", "9.0.1"
 depends "ntp", "1.8.6"
-depends "php", "6.1.1"
+depends "php", "8.0.0"
 depends "apache2", "3.2.2"
 depends "acme", "4.1.1"
 depends "composer", "2.2.0"
@@ -32,4 +32,4 @@ depends 'zipfile', "0.1.0"
 depends "poise-python", "1.7.0"
 depends "chef_client_updater", "~> 3.5.2"
 
-depends 'docker', '~> 4.9.2'
+depends 'docker', '~> 6.0.3'
