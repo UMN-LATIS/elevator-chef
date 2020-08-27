@@ -16,7 +16,7 @@ cookbook "chef-msttcorefonts",
 # cookbook "apache2", "~> 3.0.0"
 cookbook "apache2",
 	git: "https://github.com/sous-chefs/apache2",
-	ref: "df45cbfab8246ae0800b11b4cff8b103a0ed2113"
+	ref: "a33df8e1188cfad2a95dca4cdac15b667cdb2884"
 
 cookbook "beanstalkd",
   git: "git@github.com:cmcfadden/beanstalkd.git"
