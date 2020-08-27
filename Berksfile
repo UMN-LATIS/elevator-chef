@@ -3,7 +3,7 @@ source "https://supermarket.chef.io"
 metadata
 
 cookbook "cookbook-shibboleth",
-  git: "git@github.umn.edu:mcfa0086/cookbook-shibboleth.git"
+  git: "git@github.umn.edu:mcfa0086/cookbook-shibboleth.git", branch: "berks"
 
 #cookbook "r",
 #  git: "git@github.com:davidski/chef-r.git",
