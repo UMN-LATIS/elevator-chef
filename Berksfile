@@ -2,7 +2,7 @@ source "https://supermarket.chef.io"
 
 metadata
 
-cookbook "cookbook-shibboleth",
+cookbook "cookbook-shibboleth",gi
   git: "git@github.umn.edu:mcfa0086/cookbook-shibboleth.git"
 
 #cookbook "r",
@@ -14,7 +14,7 @@ cookbook "chef-msttcorefonts",
   ref: "9b1417077047cc8371fac51a0fd67c04f2959b87"
 
 # cookbook "apache2", "~> 3.0.0"
-#cookbook "apache2", "3.2.2", git: "https://github.com/sous-chefs/apache2"
+#cookbook "apache2", "3.3.1", git: "https://github.com/sous-chefs/apache2"
 
 
 cookbook "beanstalkd",
