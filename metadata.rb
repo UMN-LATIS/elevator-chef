@@ -33,3 +33,4 @@ depends "poise-python", "1.7.0"
 depends "chef_client_updater", "~> 3.5.2"
 
 depends 'docker', '~> 6.0.3'
+
