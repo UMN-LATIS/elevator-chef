@@ -23,7 +23,7 @@ depends "ssh_known_hosts", "6.2.0"
 depends "cookbook-shibboleth", "0.7.3"
 depends "elasticsearch", "= 3.2.1"
 depends 'bluepill', "4.1.1"
-depends 'chef-client', "= 11.1.2"
+depends 'chef-client', "= 12.2.0"
 depends 'tar', "0.7.0"
 # depends 'r', '~> 0.4.0'
 depends 'L7-redis', "=1.0.7"
