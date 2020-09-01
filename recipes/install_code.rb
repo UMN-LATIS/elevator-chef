@@ -12,17 +12,17 @@ package "php-apcu"
 package "php-mongodb"
 # package "php-imagick"
 package "php7.4-dev"
-package "php-redis"
+
 package "zip"
 package "unzip"
 package "php7.4-zip"
-
+package "php-redis"
 package "git-flow"
 
 # why do we uninstall this?  Not sure.  Maybe has to do with redis?  Would have been nice if there were comments.
-package "php-igbinary" do
-	action :remove
-end
+# package "php-igbinary" do
+# 	action :remove
+# end
 
 
 
