@@ -50,7 +50,7 @@ keyPath =  "/etc/shibboleth/sp-key.pem"
 
 file certPath do
   content databag_shib[node.chef_environment]["certificate"]
-  owner "root"
+  owner "_shibd"
   group "root"
   mode 0600
   only_if node['elevator']['config']['shibboleth']['enableShibboleth']
@@ -58,7 +58,7 @@ end
 
 file keyPath do
   content databag_shib[node.chef_environment]["key"]
-  owner "root"
+  owner "_shibd"
   group "root"
   mode 0600
   only_if node['elevator']['config']['shibboleth']['enableShibboleth']
