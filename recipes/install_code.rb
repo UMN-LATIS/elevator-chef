@@ -8,6 +8,7 @@ include_recipe "php"
 package "php7.4-pgsql"
 package "php7.4-curl"
 package "php7.4-ldap"
+package "php7.4-mbstring"
 package "php-apcu"
 package "php-mongodb"
 # package "php-imagick"
@@ -18,6 +19,9 @@ package "unzip"
 package "php7.4-zip"
 package "php-redis"
 package "git-flow"
+
+# need netstat
+package "net-tools"
 
 # why do we uninstall this?  Not sure.  Maybe has to do with redis?  Would have been nice if there were comments.
 # package "php-igbinary" do
@@ -84,22 +88,6 @@ composer_project node['elevator']['install_directory'] do
  	quiet false
  	notifies :create, "template[#{node['elevator']['install_directory']}/vendor/doctrine/dbal/postgresPatch]", :delayed
 	action :nothing
-end
-
-
-# TODO: this is a hack while we wait for doctrine 2.6 to ship
-
-template "#{node['elevator']['install_directory']}/vendor/doctrine/dbal/postgresPatch" do
-	source "doctrinePatch.erb"
-	action :nothing
-	notifies :run, "execute[composer_doctrine_hack]", :delayed
-end
-
-execute "composer_doctrine_hack" do
-	cwd "#{node['elevator']['install_directory']}/vendor/doctrine/dbal"
-	command "patch -p1 < postgresPatch"
-	action :nothing
-	not_if { ::File.exist? "#{node['elevator']['install_directory']}/vendor/doctrine/dbal/lib/Doctrine/DBAL/Platforms/PostgreSQL94Platform.php" }
 end
 
 

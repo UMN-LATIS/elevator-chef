@@ -94,6 +94,15 @@ cron 'clean_storage' do
   command %W{/usr/bin/php #{node['elevator']['install_directory']}/index.php beltdrive cleanupSource}.join(' ')
 end
 
+
+swap_file 'local_swap' do
+  path            "/scratch/swap" # default value: 'name' unless specified
+  persist         false # default value: false
+  size            10000
+  swappiness      60
+  action          :create # defaults to :create if not specified
+end
+
 bluepill_service 'elevatorTranscode' do
   action [:enable, :load, :start]
 end
