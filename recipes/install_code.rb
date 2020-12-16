@@ -86,7 +86,6 @@ end
 composer_project node['elevator']['install_directory'] do
 	dev false
  	quiet false
- 	notifies :create, "template[#{node['elevator']['install_directory']}/vendor/doctrine/dbal/postgresPatch]", :delayed
 	action :nothing
 end
 
