@@ -8,7 +8,12 @@
 #
 
 
-
+cron 'run chef at boot' do
+  action :create
+  time :reboot
+  user 'root'
+  command '/usr/bin/chef-client'
+end
 
 execute 'update grub' do
   command "echo 'GRUB_CMDLINE_LINUX=\"cdgroup_enable=memory swapaccount=1\"' > /etc/default/grub && update-grub"
