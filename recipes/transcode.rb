@@ -8,11 +8,14 @@
 #
 
 
+cron_path = {"PATH" =>"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"}
+
 cron 'run chef at boot' do
   action :create
   time :reboot
   user 'root'
-  command '/usr/bin/chef-client'
+  environment cron_path
+  command '/opt/chef/embedded/bin/ruby /usr/bin/chef-client -c /etc/chef/client.rb -P /var/run/chef/client.pid'
 end
 
 execute 'update grub' do
