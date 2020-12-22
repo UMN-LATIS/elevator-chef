@@ -8,6 +8,10 @@
 #
 
 
+# we need to tweak the grub setup, reboot the machine, and then continue
+# this is because ubuntu doesn't default to having swap enabled for cgroups
+# making this change for 20.04 updates
+
 cron_path = {"PATH" =>"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"}
 
 cron 'run chef at boot' do
