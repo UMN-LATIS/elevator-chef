@@ -34,6 +34,10 @@ remote_file "/usr/local/bin/beanstalkd_cloudwatch" do
   mode 0775
 end
 
+file '/proc/sys/net/ipv4/tcp_keepalive_time' do
+  content "1200"
+end
+
 databag = data_bag_item("elevator", "aws")
 
 
