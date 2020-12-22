@@ -11,7 +11,7 @@ provisioner:
   environments_path: "../chef-repo/environments/"
   encrypted_data_bag_secret_key_path: "/Users/colin/Dropbox/data_bags/chef_encryption_key"
   client_rb:
-    environment: elevator-dev-1604
+    environment: elevator-dev-2004
     silence_deprecation_warnings: false
     resource_cloning: false
 
@@ -21,5 +21,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[elevator::web]
+      - recipe[elevator::transcode]
     attributes:

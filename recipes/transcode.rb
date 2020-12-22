@@ -7,7 +7,21 @@
 # All rights reserved - Do Not Redistribute
 #
 
-# this only is going to support Ubuntu 14.04
+
+
+
+execute 'update grub' do
+  command "echo 'GRUB_CMDLINE_LINUX=\"cdgroup_enable=memory swapaccount=1\"' > /etc/default/grub && update-grub"
+  not_if File.readlines("/etc/default/grub").grep(/cdgroup_enable/).any?
+  notifies :reboot_now, 'reboot[now]', :immediately
+end
+
+reboot 'now' do
+  action :nothing
+  reason 'Cannot continue Chef run without a reboot.'
+  delay_mins 0
+end
+
 
 #include_recipe "#{cookbook_name}::transcode"
 include_recipe "#{cookbook_name}::base"
