@@ -12,7 +12,7 @@
 
 execute 'update grub' do
   command "echo 'GRUB_CMDLINE_LINUX=\"cdgroup_enable=memory swapaccount=1\"' > /etc/default/grub && update-grub"
-  not_if File.readlines("/etc/default/grub").grep(/cdgroup_enable/).any?
+  not_if { File.readlines("/etc/default/grub").grep(/cdgroup_enable/).any? }
   notifies :reboot_now, 'reboot[now]', :immediately
 end
 
