@@ -3,6 +3,10 @@ include_recipe "#{cookbook_name}::git_setup"
 
 node.default['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
 
+override['php']['directives'] = {
+  :max_input_vars => '2000'
+}
+
 # install PHP
 include_recipe "php"
 package "php7.4-pgsql"
@@ -27,10 +31,6 @@ package "net-tools"
 # package "php-igbinary" do
 # 	action :remove
 # end
-
-override['php']['directives'] = {
-  :max_input_vars => '2000'
-}
 
 
 
