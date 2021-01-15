@@ -1,11 +1,8 @@
 include_recipe "#{cookbook_name}::git_setup"
 
 
-node.default['php']['directives'] =  { 'session.gc_maxlifetime' => 43200 }
+node.default['php']['directives'] =  { 'session.gc_maxlifetime' => 43200, 'max_input_vars'=> 2000 }
 
-override['php']['directives'] = {
-  :max_input_vars => '2000'
-}
 
 # install PHP
 include_recipe "php"
