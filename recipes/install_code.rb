@@ -28,6 +28,10 @@ package "net-tools"
 # 	action :remove
 # end
 
+override['php']['directives'] = {
+  :max_input_vars => '2000'
+}
+
 
 
 # Before running composer, let's cache some well-known remote ssh keys.  Saves
