@@ -132,8 +132,13 @@ default['elevator']['config']['jwplayer'] = ""
 default['elevator']['config']['googleapi'] = ""
 default['elevator']['config']['apiKey'] = ""
 default['elevator']['config']['apiSecret'] = ""
+
+# should we override our base bootstrap CSS?
 default['elevator']['config']['css_override'] = 'FALSE'
+# should users be able to access hidden assets if they know the URL?
 default['elevator']['config']['restrict_hidden_assets'] = 'FALSE'
+
+default['elevator']['config']['sentry_dsn'] = ""
 
 
 default['elevator']['containers']['ffmpeg']['version'] = "latest"
