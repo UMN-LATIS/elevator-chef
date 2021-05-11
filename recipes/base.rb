@@ -35,18 +35,18 @@ include_recipe 'ntp'
 
 
 
-execute 'mkfs' do
-  command "mkfs -t ext4 /dev/xvdg"
-  # only if it's not mounted already
-  not_if "grep -qs #{node['elevator']['config']['scratchspace']} /proc/mounts"
-  only_if "ls /dev | grep -qs xvdg"
-end
 
 directory node['elevator']['config']['scratchspace'] do
    mode '0777'
   not_if "grep -qs #{node['elevator']['config']['scratchspace']} /proc/mounts"
  end
 
+execute 'mkfs' do
+  command "mkfs -t ext4 /dev/xvdg"
+  # only if it's not mounted already
+  not_if "grep -qs #{node['elevator']['config']['scratchspace']} /proc/mounts"
+  only_if "ls /dev | grep -qs xvdg"
+end
 
 # now we can enable and mount it and we're done!
 mount node['elevator']['config']['scratchspace'] do
@@ -57,6 +57,23 @@ mount node['elevator']['config']['scratchspace'] do
   only_if "ls /dev | grep -qs xvdg"
 end
 
+# Right now, we've got a mixed fleet of c4 and c5 hosts. C5 hosts have EBS volumes mounted at
+# /dev/nvme1. Once we're all c5, the above lines can go away.
+execute 'mkfs' do
+  command "mkfs -t ext4 /dev/nvme1n1"
+  # only if it's not mounted already
+  not_if "grep -qs #{node['elevator']['config']['scratchspace']} /proc/mounts"
+  only_if "ls /dev | grep -qs nvme1n1"
+end
+
+# now we can enable and mount it and we're done!
+mount node['elevator']['config']['scratchspace'] do
+  device '/dev/nvme1n1'
+  fstype 'ext4'
+  action [:enable, :mount]
+  not_if "grep -qs #{node['elevator']['config']['scratchspace']} /proc/mounts"
+  only_if "ls /dev | grep -qs nvme1n1"
+end
 
 include_recipe 'chef-client::config'
 include_recipe 'chef-client::service'
