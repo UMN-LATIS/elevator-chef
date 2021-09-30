@@ -2,7 +2,7 @@
 
 $config["smtp_host"] = "ssl://<%= node['elevator']['config']['email']['smtphost'] %>";
 $config["protocol"] = "smtp";
-$config["smtp_port"] = 465
+$config["smtp_port"] = 465;
 $config["smtp_pass"] = "<%= @emailpass %>";
 $config["smtp_user"] = "<%= @emailuser %>";
 $config["mailtype"] = "html";
