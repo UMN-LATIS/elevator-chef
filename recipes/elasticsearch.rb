@@ -24,6 +24,21 @@ elasticsearch_configure 'elasticsearch' do
       'network.host' => '0.0.0.0'
     })
 	jvm_options %w(
+		-XX:+UseConcMarkSweepGC
+		-XX:CMSInitiatingOccupancyFraction=75
+		-XX:+UseCMSInitiatingOccupancyOnly
+		-XX:+DisableExplicitGC
+		-XX:+AlwaysPreTouch
+		-server
+		-Djava.awt.headless=true
+		-Dfile.encoding=UTF-8
+		-Djna.nosys=true
+		-Dio.netty.noUnsafe=true
+		-Dio.netty.noKeySetOptimization=true
+		-Dlog4j.shutdownHookEnabled=false
+		-Dlog4j2.disable.jmx=true
+		-Dlog4j.skipJansi=true
+		-XX:+HeapDumpOnOutOfMemoryError
 		-Dlog4j2.formatMsgNoLookups=true
 	)
 end
