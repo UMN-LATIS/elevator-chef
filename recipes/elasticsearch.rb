@@ -23,20 +23,11 @@ elasticsearch_configure 'elasticsearch' do
       'http.cors.allow-origin' => '*',
       'network.host' => '0.0.0.0'
     })
+	jvm_options %w(
+		-Dlog4j2.formatMsgNoLookups=true
+	)
 end
 
-directory "/etc/elasticsearch/jvm.options.d" do
-	user "elasticsearch"
-	group "elasticsearch"
-	mode "02775"
-end
-
-template "/etc/elasticsearch/jvm.options.d/log4j2.options" do
-	source "jndi.erb"
-	owner "elasticsearch"
-	group "elasticsearch"
-	mode "0664"
-end
 
 
 # unless FileTest.exists?("/usr/local/elasticsearch/plugins/head/")
