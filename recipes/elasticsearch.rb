@@ -25,6 +25,20 @@ elasticsearch_configure 'elasticsearch' do
     })
 end
 
+directory "/etc/elasticsearch/jvm.options.d" do
+	user "elasticsearch"
+	group "elasticsearch"
+	mode "02775"
+end
+
+template "/etc/elasticsearch/jvm.options.d/log4j2.options" do
+	source "jndi.erb"
+	owner "elasticsearch"
+	group "elasticsearch"
+	mode "0664"
+end
+
+
 # unless FileTest.exists?("/usr/local/elasticsearch/plugins/head/")
 # 	bash "elasticHead" do
 # 		code "cd /usr/local/elasticsearch; ./bin/plugin -install mobz/elasticsearch-head"
