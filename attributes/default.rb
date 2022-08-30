@@ -139,6 +139,7 @@ default['elevator']['config']['css_override'] = 'FALSE'
 default['elevator']['config']['restrict_hidden_assets'] = 'FALSE'
 
 default['elevator']['config']['sentry_dsn'] = ""
+default['elevator']['config']['umn_bearer_token'] = ""
 
 
 default['elevator']['containers']['ffmpeg']['version'] = "latest"
