@@ -118,7 +118,7 @@ AddOutputFilterByType DEFLATE text/css
     RewriteCond %{REQUEST_URI} !^/Shibboleth\.sso [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php?/$1 [L]
+    RewriteRule ^(.*)$ index.php?/$1 [B,L]
 </IfModule>
 
 <IfModule !mod_rewrite.c>
