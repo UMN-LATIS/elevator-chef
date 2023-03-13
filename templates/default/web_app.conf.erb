@@ -16,7 +16,7 @@ end
   ServerName <%= @params[:server_name] %>
   DocumentRoot <%= @params[:docroot] %>
   AllowEncodedSlashes NoDecode
-
+  LimitRequestFieldSize 32768
   <% if @params[:server_aliases] and not @params[:server_aliases].empty? -%>
   ServerAlias <% @params[:server_aliases].each do |a| %><%= "#{a}" %> <% end -%>
   <% end -%>
