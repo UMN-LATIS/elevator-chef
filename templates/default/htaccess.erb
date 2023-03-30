@@ -7,6 +7,7 @@ RewriteEngine On
 
 php_value upload_max_filesize 500M
 php_value post_max_size 510M
+php_value memory_limit 256M
 
 SetEnv CI_ENV <%=node['elevator']['deploy_environment'] %>
 
