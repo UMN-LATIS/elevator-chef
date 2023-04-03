@@ -82,7 +82,7 @@ node[:elevator][:containers].each do |k,v|
     template "/usr/local/bin/#{command}" do
       source "dockerCommand.erb"
       variables ({
-        :dockerImage => k,
+        :dockerImage => imageName,
         :dockerVersion => v[:version],
         :dockerCommand => overrideCommand ? command : ""
       })
