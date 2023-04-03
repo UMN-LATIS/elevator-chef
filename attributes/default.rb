@@ -142,7 +142,7 @@ default['elevator']['config']['sentry_dsn'] = ""
 default['elevator']['config']['umn_bearer_token'] = ""
 
 
-default['elevator']['container_repo'] = "ghcr.io/umn-elevator/"
+default['elevator']['container_repo'] = "ghcr.io/umn-elevator"
 default['elevator']['containers']['ffmpeg']['version'] = "latest"
 default['elevator']['containers']['ffmpeg']['command'] = ["ffmpeg", "MP4Box", "ffprobe"]
 default['elevator']['containers']['vips']['version'] = "latest"
