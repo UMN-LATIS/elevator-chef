@@ -49,7 +49,7 @@ docker_installation_package 'default' do
 end
 
 node[:elevator][:containers].each do |k,v|
-  imageName = "umnelevator/#{k}"
+  imageName = "#{node[:elevator][:container_repo]}/#{k}"
   docker_image imageName do
     action :pull
     tag v[:version]
