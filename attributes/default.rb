@@ -77,6 +77,7 @@ default['elevator']['config']['binaries']['pdftotext'] = '/usr/local/bin/pdftote
 default['elevator']['config']['binaries']['mogrify'] = '/usr/local/bin/mogrify'
 default['elevator']['config']['binaries']['montage'] = '/usr/local/bin/montage'
 default['elevator']['config']['binaries']['identify'] = '/usr/local/bin/identify'
+default['elevator']['config']['binaries']['cziutils'] = '/usr/local/bin/cziutils'
 
 
 # TODO: include options for XSS filtering and CSRF token
