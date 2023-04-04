@@ -22,7 +22,7 @@ to accommodate multiple vhosts (for both IIS and Apache) for the shibboleth-2.4.
     </RequestMap>
   </RequestMapper>
   <ApplicationDefaults entityID="https://elevator.stthomas.edu/default" REMOTE_USER="eppn mail" signing="true">
-    <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="false"
+    <Sessions lifetime="28800" timeout="3600" consistentAddress="false" checkAddress="false" relayState="ss:mem" handlerSSL="false"
       idpHistory="false">
       <SSO id="StThomas" isDefault="true" entityID="http://adfs.stthomas.edu/adfs/services/trust" conf:ignoreNoPassive="true"
         ignoreNoPassive="true">
@@ -63,7 +63,7 @@ up-to-date. It is NOT used by anything Shibboleth.
 
 
     <ApplicationOverride id="elevator.stthomas.edu" homeURL="https://elevator.stthomas.edu">
-      <Sessions lifetime="28800" timeout="3600" checkAddress="false" relayState="ss:mem" handlerSSL="false"
+      <Sessions lifetime="28800" timeout="3600" consistentAddress="false" checkAddress="false" relayState="ss:mem" handlerSSL="false"
         idpHistory="false">
         <SSO entityID="http://adfs.stthomas.edu/adfs/services/trust" conf:ignoreNoPassive="true">
           SAML2 SAML1
