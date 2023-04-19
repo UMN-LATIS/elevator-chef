@@ -53,3 +53,12 @@ cron 'update_cloudwatch' do
   user 'elevator'
   command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t transcoder -e current-jobs-urgent -n AutoScaling -m transcodeStatus-#{node.chef_environment}}.join(' ')
 end
+
+cron 'update_cloudwatch_processing' do
+  action :create
+  minute '*'
+  hour '*'
+  weekday '*'
+  user 'elevator'
+  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t newUploads -e current-jobs-urgent -n AutoScaling -m processingStatus-#{node.chef_environment}}.join(' ')
+end
