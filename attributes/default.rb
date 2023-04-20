@@ -78,6 +78,7 @@ default['elevator']['config']['binaries']['mogrify'] = '/usr/local/bin/mogrify'
 default['elevator']['config']['binaries']['montage'] = '/usr/local/bin/montage'
 default['elevator']['config']['binaries']['identify'] = '/usr/local/bin/identify'
 default['elevator']['config']['binaries']['cziutils'] = '/usr/local/bin/cziutils'
+default['elevator']['config']['binaries']['tarrific'] = '/usr/local/bin/tarrific'
 
 
 # TODO: include options for XSS filtering and CSRF token
@@ -164,3 +165,4 @@ default['elevator']['containers']['gnuplot']['version'] = "latest"
 default['elevator']['containers']['gltf']['version'] = "latest"
 default['elevator']['containers']['gltf']['command'] = ["obj2gltf", "gltf-pipeline"]
 default['elevator']['containers']['cziutils']['version'] = "latest"
+default['elevator']['containers']['tarrific']['version'] = "latest"
