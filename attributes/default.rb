@@ -143,6 +143,7 @@ default['elevator']['config']['restrict_hidden_assets'] = 'FALSE'
 default['elevator']['config']['sentry_dsn'] = ""
 default['elevator']['config']['umn_bearer_token'] = ""
 
+default['elevator']['config']['available_themes'] = ["folwell", "light"]
 
 default['elevator']['container_repo'] = "ghcr.io/umn-elevator"
 default['elevator']['containers']['ffmpeg']['version'] = "latest"
@@ -166,3 +167,4 @@ default['elevator']['containers']['gltf']['version'] = "latest"
 default['elevator']['containers']['gltf']['command'] = ["obj2gltf", "gltf-pipeline"]
 default['elevator']['containers']['cziutils']['version'] = "latest"
 default['elevator']['containers']['tarrific']['version'] = "latest"
+
