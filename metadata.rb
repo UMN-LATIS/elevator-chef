@@ -4,7 +4,7 @@ maintainer_email 'buysse@umn.edu'
 license          'All rights reserved'
 description      'Installs/Configures --test-kitchen'
 long_description 'Installs/Configures --test-kitchen'
-version          '1.1.2'
+version          '1.1.3'
 
 supports "ubuntu", "20.04"
 
@@ -20,7 +20,7 @@ depends "acme", "4.1.2"
 depends "composer", "2.2.0"
 depends "beanstalkd", "= 0.3.2"
 depends "ssh_known_hosts", "6.2.0"
-depends "cookbook-shibboleth", "0.7.4"
+depends "cookbook-shibboleth", "0.7.5"
 depends "elasticsearch", "= 3.4.10"
 depends 'bluepill', "4.1.1"
 depends 'chef-client', "= 12.2.0"
