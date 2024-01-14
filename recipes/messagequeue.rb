@@ -23,6 +23,7 @@ node.default['beanstalkd']['listen_port'] = 11300
 include_recipe "beanstalkd"
 # workaround due to https://github.com/poise/poise-python/issues/140
 node.default['poise-python']['options']['pip_version'] = '18.0'
+node.default['poise-python']['options']['get_pip_url'] = 'https://bootstrap.pypa.io/pip/2.7/get-pip.py'
 include_recipe "poise-python"
 
 python_package "boto"
