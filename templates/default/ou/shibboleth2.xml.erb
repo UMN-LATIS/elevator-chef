@@ -24,7 +24,7 @@ to accommodate multiple vhosts (for both IIS and Apache) for the shibboleth-2.4.
   <ApplicationDefaults entityID="https://3d.libraries.ou.edu/default" REMOTE_USER="eppn mail" signing="true">
     <Sessions lifetime="28800" timeout="3600" consistentAddress="false" checkAddress="false" relayState="ss:mem" handlerSSL="false"
       idpHistory="false">
-      <SSO id="OU" isDefault="true" entityID="http://sso.ou.edu" conf:ignoreNoPassive="true"
+      <SSO id="OU" isDefault="true" entityID="sso.ou.edu" conf:ignoreNoPassive="true"
         ignoreNoPassive="true">
         SAML2 SAML1
       </SSO>
@@ -65,7 +65,7 @@ up-to-date. It is NOT used by anything Shibboleth.
     <ApplicationOverride id="3d.libraries.ou.edu" homeURL="https://3d.libraries.ou.edu">
       <Sessions lifetime="28800" timeout="3600" consistentAddress="false" checkAddress="false" relayState="ss:mem" handlerSSL="false"
         idpHistory="false">
-        <SSO entityID="http://sso.ou.edu" conf:ignoreNoPassive="true">
+        <SSO entityID="sso.ou.edu" conf:ignoreNoPassive="true">
           SAML2 SAML1
         </SSO>
         <Logout>Local</Logout>
