@@ -24,7 +24,7 @@ to accommodate multiple vhosts (for both IIS and Apache) for the shibboleth-2.4.
   <ApplicationDefaults entityID="https://3d.libraries.ou.edu/default" REMOTE_USER="eppn mail" signing="true">
     <Sessions lifetime="28800" timeout="3600" consistentAddress="false" checkAddress="false" relayState="ss:mem" handlerSSL="false"
       idpHistory="false">
-      <SSO id="OU" isDefault="true" entityID="http://ou" conf:ignoreNoPassive="true"
+      <SSO id="OU" isDefault="true" entityID="http://sso.ou.edu" conf:ignoreNoPassive="true"
         ignoreNoPassive="true">
         SAML2 SAML1
       </SSO>
@@ -39,7 +39,7 @@ to accommodate multiple vhosts (for both IIS and Apache) for the shibboleth-2.4.
     <Errors supportContact="server-help@cla.umn.edu" logoLocation="/shibboleth-sp/logo.jpg"
       styleSheet="/shibboleth-sp/main.css" />
 
-    <MetadataProvider type="XML" url="https://ou"
+    <MetadataProvider type="XML" url="https://sso.ou.edu/pf/federation_metadata.ping?PartnerSpId=https%3A%2F%2F3d.libraries.ou.edu%2Fdefault"
       backingFilePath="idp-metadata.xml" reloadInterval="43200">
     </MetadataProvider>
     <AttributeExtractor type="XML" validate="true" path="attribute-map.xml" />
@@ -65,7 +65,7 @@ up-to-date. It is NOT used by anything Shibboleth.
     <ApplicationOverride id="3d.libraries.ou.edu" homeURL="https://3d.libraries.ou.edu">
       <Sessions lifetime="28800" timeout="3600" consistentAddress="false" checkAddress="false" relayState="ss:mem" handlerSSL="false"
         idpHistory="false">
-        <SSO entityID="ou" conf:ignoreNoPassive="true">
+        <SSO entityID="http://sso.ou.edu" conf:ignoreNoPassive="true">
           SAML2 SAML1
         </SSO>
         <Logout>Local</Logout>
@@ -78,7 +78,7 @@ up-to-date. It is NOT used by anything Shibboleth.
       </Sessions>
       <Errors supportContact="server-help@cla.umn.edu" logoLocation="/shibboleth-sp/logo.jpg"
         styleSheet="/shibboleth-sp/main.css" />
-      <MetadataProvider type="XML" url="ou"
+      <MetadataProvider type="XML" url="https://sso.ou.edu/pf/federation_metadata.ping?PartnerSpId=https%3A%2F%2F3d.libraries.ou.edu%2Fdefault"
         backingFilePath="idp-metadata.xml" reloadInterval="43200">
       </MetadataProvider>
       <AttributeExtractor type="XML" validate="true" path="attribute-map.xml" />
