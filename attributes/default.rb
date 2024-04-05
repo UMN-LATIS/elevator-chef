@@ -58,6 +58,7 @@ default['elevator']['config']['email']['smtphost'] = ''
 # binaries.  By default, assume in default path.
 default['elevator']['config']['binaries']['blender'] = '/usr/local/bin/blender'
 default['elevator']['config']['binaries']['ffmpeg'] = '/usr/local/bin/ffmpeg'
+default['elevator']['config']['binaries']['exiftool'] = '/usr/local/bin/exiftool'
 default['elevator']['config']['binaries']['ffprobe'] = '/usr/local/bin/ffprobe'
 default['elevator']['config']['binaries']['yamdi'] = 'yamdi'
 default['elevator']['config']['binaries']['qtfaststart'] = 'qtfaststart'
