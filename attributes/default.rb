@@ -36,6 +36,8 @@ default['elevator']['redis']['port'] = '6379'
 default['elevator']['beanstalkd']['hostname'] = 'localhost'
 
 default['elevator']['config']['web_hostname'] = 'localhost'
+default['elevator']['config']['environment'] = 'development'
+default['elevator']['config']['available_themes'] = '["folwell","light"]'
 default['elevator']['config']['base_url'] = "http://localhost/"
 ### the following value is not suitable for production, development only
 ### 0 - no logs, 1 - errors, 2 - debug, 3 - informational, 4 - all

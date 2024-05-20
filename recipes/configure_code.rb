@@ -10,6 +10,7 @@ template "#{node['elevator']['install_directory']}/application/config/config.php
 	})
 end
 
+
 email = data_bag_item("elevator", "emailuser")
 
 template "#{node['elevator']['install_directory']}/application/config/email.php" do
@@ -35,4 +36,17 @@ template "#{node['elevator']['install_directory']}/.htaccess" do
 	owner node['elevator']['user']
 	group node['elevator']['group']
 	mode "0664"
+end
+
+
+template "#{node['elevator']['install_directory']}/.env" do
+	source "env.erb"
+	variables ({
+		:ldapuser => ldap[node.chef_environment]['ldapusername'],
+		:ldappass => ldap[node.chef_environment]['ldappassword'],
+		:dbuser => databag[node.chef_environment]['username'],
+		:dbpassword => databag[node.chef_environment]['password'],
+		:emailuser => email[node.chef_environment]['username'],
+		:emailpass => email[node.chef_environment]['password']
+	})
 end
