@@ -2,34 +2,34 @@
 
 ldap = data_bag_item("elevator", "ldap")
 
-template "#{node['elevator']['install_directory']}/application/config/config.php" do
-	source "config.php.erb"
-	variables ({
-		:ldapuser => ldap[node.chef_environment]['ldapusername'],
-		:ldappass => ldap[node.chef_environment]['ldappassword']
-	})
-end
+# template "#{node['elevator']['install_directory']}/application/config/config.php" do
+# 	source "config.php.erb"
+# 	variables ({
+# 		:ldapuser => ldap[node.chef_environment]['ldapusername'],
+# 		:ldappass => ldap[node.chef_environment]['ldappassword']
+# 	})
+# end
 
 
 email = data_bag_item("elevator", "emailuser")
 
-template "#{node['elevator']['install_directory']}/application/config/email.php" do
-	source "email.php.erb"
-	variables ({
-		:emailuser => email[node.chef_environment]['username'],
-		:emailpass => email[node.chef_environment]['password']
-	})
-end
+# template "#{node['elevator']['install_directory']}/application/config/email.php" do
+# 	source "email.php.erb"
+# 	variables ({
+# 		:emailuser => email[node.chef_environment]['username'],
+# 		:emailpass => email[node.chef_environment]['password']
+# 	})
+# end
 
 databag = data_bag_item("elevator", "dbuser")
 
-template "#{node['elevator']['install_directory']}/application/config/database.php" do
-	source "database.php.erb"
-	variables ({
-		:dbuser => databag[node.chef_environment]['username'],
-		:dbpassword => databag[node.chef_environment]['password']
-	})
-end
+# template "#{node['elevator']['install_directory']}/application/config/database.php" do
+# 	source "database.php.erb"
+# 	variables ({
+# 		:dbuser => databag[node.chef_environment]['username'],
+# 		:dbpassword => databag[node.chef_environment]['password']
+# 	})
+# end
 
 template "#{node['elevator']['install_directory']}/.htaccess" do
 	source "htaccess.erb"
@@ -49,4 +49,11 @@ template "#{node['elevator']['install_directory']}/.env" do
 		:emailuser => email[node.chef_environment]['username'],
 		:emailpass => email[node.chef_environment]['password']
 	})
+end
+
+# grab git rev-parse HEAD and echo it into REVISION file
+execute "get_git_revision" do
+	command "git rev-parse HEAD > #{node['elevator']['install_directory']}/REVISION"
+	cwd node['elevator']['install_directory']
+	only_if { ::File.exist?("#{node['elevator']['install_directory']}/.git") }
 end
