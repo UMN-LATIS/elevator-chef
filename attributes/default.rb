@@ -171,3 +171,4 @@ default['elevator']['containers']['gltf']['command'] = ["obj2gltf", "gltf-pipeli
 default['elevator']['containers']['cziutils']['version'] = "latest"
 default['elevator']['containers']['tarrific']['version'] = "latest"
 
+default['elevator']['config']['queueingMethod'] = 'beanstalkd'
