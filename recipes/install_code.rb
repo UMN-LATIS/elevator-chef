@@ -54,7 +54,9 @@ end
 #   source "http://s3.amazonaws.com/elevator-assets/ca-certificates.crt"
 #   mode 0755
 # end
-
+execute "mark directory as safe" do
+	command "git config --global --add safe.directory /opt/elevator"
+end
 
 
 git node['elevator']['install_directory'] do
