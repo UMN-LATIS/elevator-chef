@@ -172,3 +172,6 @@ default['elevator']['containers']['cziutils']['version'] = "latest"
 default['elevator']['containers']['tarrific']['version'] = "latest"
 
 default['elevator']['config']['queueingMethod'] = 'beanstalkd'
+default['elevator']['config']['awsAccessKeyId'] = ''
+default['elevator']['config']['awsSecretAccessKey'] = ''
+default['elevator']['config']['awsJobDefinition'] = ''
