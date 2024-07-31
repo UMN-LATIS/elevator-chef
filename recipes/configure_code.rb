@@ -50,7 +50,7 @@ template "#{node['elevator']['install_directory']}/.env" do
 		:dbuser => databag[node.chef_environment]['username'],
 		:dbpassword => databag[node.chef_environment]['password'],
 		:emailuser => email[node.chef_environment]['username'],
-		:emailpass => email[node.chef_environment]['password']
+		:emailpass => email[node.chef_environment]['password'],
 		:awsSecretAccessKey => aws_queueing[node.chef_environment]['accesskey']
 	})
 end
