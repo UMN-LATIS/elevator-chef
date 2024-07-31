@@ -23,6 +23,9 @@ email = data_bag_item("elevator", "emailuser")
 
 databag = data_bag_item("elevator", "dbuser")
 
+
+
+aws_queueing = data_bag_item("elevator", "aws_queueing")
 # template "#{node['elevator']['install_directory']}/application/config/database.php" do
 # 	source "database.php.erb"
 # 	variables ({
@@ -48,6 +51,7 @@ template "#{node['elevator']['install_directory']}/.env" do
 		:dbpassword => databag[node.chef_environment]['password'],
 		:emailuser => email[node.chef_environment]['username'],
 		:emailpass => email[node.chef_environment]['password']
+		:awsSecretAccessKey => aws_queueing[node.chef_environment]['accesskey']
 	})
 end
 
