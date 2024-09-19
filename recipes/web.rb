@@ -210,7 +210,7 @@ cron 'update_date_holds' do
   hour '2'
   weekday '*'
   user 'root'
-  command %W{/usr/bin/php #{node['elevator']['install_directory']}/index.php admin updateDateHolds}.join(' ') > /dev/null 2>&1
+  command %W{/usr/bin/php #{node['elevator']['install_directory']}/index.php admin updateDateHolds  > /dev/null 2>&1}.join(' ')
 end
 
 

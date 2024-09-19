@@ -52,7 +52,7 @@ cron 'update_cloudwatch' do
   hour '*'
   weekday '*'
   user 'elevator'
-  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t transcoder -e current-jobs-urgent -n AutoScaling -m transcodeStatus-#{node.chef_environment}}.join(' ') > /dev/null 2>&1
+  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t transcoder -e current-jobs-urgent -n AutoScaling -m transcodeStatus-#{node.chef_environment} > /dev/null 2>&1}.join(' ')
 end
 
 cron 'update_cloudwatch_reserved' do
@@ -61,7 +61,7 @@ cron 'update_cloudwatch_reserved' do
   hour '*'
   weekday '*'
   user 'elevator'
-  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t transcoder -e current-jobs-reserved -n AutoScaling -m transcodeStatus-reserved-#{node.chef_environment}}.join(' ') > /dev/null 2>&1
+  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t transcoder -e current-jobs-reserved -n AutoScaling -m transcodeStatus-reserved-#{node.chef_environment} > /dev/null 2>&1}.join(' ')
 end
 
 
@@ -71,7 +71,7 @@ cron 'update_cloudwatch_processing' do
   hour '*'
   weekday '*'
   user 'elevator'
-  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t newUploads -e current-jobs-urgent -n AutoScaling -m processingStatus-#{node.chef_environment}}.join(' ') > /dev/null 2>&1
+  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t newUploads -e current-jobs-urgent -n AutoScaling -m processingStatus-#{node.chef_environment} > /dev/null 2>&1}.join(' ')
 end
 
 cron 'update_cloudwatch_processing_reserved' do
@@ -80,5 +80,5 @@ cron 'update_cloudwatch_processing_reserved' do
   hour '*'
   weekday '*'
   user 'elevator'
-  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t newUploads -e current-jobs-reserved -n AutoScaling -m processingStatus-reserved-#{node.chef_environment}}.join(' ') > /dev/null 2>&1
+  command %W{/usr/local/bin/beanstalkd_cloudwatch -k #{databag['aws_key']} -s #{databag['aws_secret']} -t newUploads -e current-jobs-reserved -n AutoScaling -m processingStatus-reserved-#{node.chef_environment} > /dev/null 2>&1}.join(' ')
 end
