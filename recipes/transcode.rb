@@ -117,7 +117,7 @@ cron 'clean_storage' do
   hour '1'
   weekday '*'
   user 'root'
-  command %W{/usr/bin/php #{node['elevator']['install_directory']}/index.php beltdrive cleanupSource}.join(' ')
+  command %W{/usr/bin/php #{node['elevator']['install_directory']}/index.php beltdrive cleanupSource}.join(' ') > /dev/null 2>&1
 end
 
 
